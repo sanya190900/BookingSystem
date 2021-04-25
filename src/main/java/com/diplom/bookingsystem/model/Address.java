@@ -1,43 +1,33 @@
 package com.diplom.bookingsystem.model;
 
+import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+import lombok.*;
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "addresses")
 public class Address {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="addressId")
-  private Long addressId;
+  private Integer address_id;
 
-  @Column(name="country")
+  @NotNull
   private String country;
 
-  @Column(name="city")
+  @NotNull
   private String city;
 
-  @Column(name="street")
+  @NotNull
   private String street;
 
-  @Column(name="houseNumber")
-  private String houseNumber;
+  @NotNull
+  private String house_number;
 
-  @OneToMany(mappedBy = "address", fetch = FetchType.LAZY,
-      cascade = CascadeType.ALL)
-  private Set<User> users;
-
-
+  @OneToOne(mappedBy = "address")
+  private User user;
 }

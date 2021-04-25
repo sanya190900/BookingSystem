@@ -1,60 +1,50 @@
 package com.diplom.bookingsystem.model;
 
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+import lombok.*;
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User{
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="userId")
-  private Long userId;
+  private Integer user_id;
 
-  @Size(min=2)
+  @NotNull
+  @Column(unique = true, nullable = false)
   private String username;
 
-  @Email
-  @Column(name="email")
-  private String email;
-
-  @Size(min=2)
-  @Column(name="firstName")
-  private String firstName;
-
-  @Size(min=2)
-  @Column(name="surname")
-  private String surname;
-
-  @Column(name="phone")
-  private String phone;
-
-  @Column(name="activated")
-  private boolean activated = true;
-
-  @Size(min=2)
+  @Size(min = 6)
   private String password;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "addressId", nullable = false)
+  @NotNull
+  @Email
+  @Column(nullable = false)
+  private String email;
+
+  @NotNull
+  @Column(nullable = false)
+  private String name;
+
+  @NotNull
+  @Column(nullable = false)
+  private String surname;
+
+  private String phone;
+
+  private boolean activated = true;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "address_id", referencedColumnName = "address_id")
   private Address address;
 
-  @Transient
-  private String passwordConfirm;
-
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private Role role;
 }

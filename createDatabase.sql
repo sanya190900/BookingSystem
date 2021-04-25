@@ -14,31 +14,60 @@ create type dayOfWeekType as ENUM(
     'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'
 );
 
-create table if not exists addresses(
-    addressId int generated always as identity,
-    country varchar not null,
-    city varchar not null,
-    street varchar not null,
-    houseNumber varchar not null,
-    primary key(addressId)
+/*----------------------------------------------------------*/
+create table addresses
+(
+	"addressId" serial not null,
+	country text not null,
+	city text not null,
+	street text not null,
+	"houseNumber" text not null
 );
 
-create table if not exists users (
-  userId int generated always as identity,
-  username varchar not null unique,
-  password varchar not null,
-  email varchar not null unique,
-  firstName varchar not null,
-  surname varchar not null,
-  phone varchar,
-  activated boolean not null default TRUE,
-  addressId int not null,
-  userRole roleType not null,
-  primary key (userId),
-  constraint fkAddress
-    foreign key (addressId)
-    references addresses(addressId)
+alter table addresses
+	add constraint addresses_pk
+		primary key ("addressId");
+/*----------------------------------------------------------*/
+
+/*----------------------------------------------------------*/
+create table roles
+(
+	"roleId" serial not null,
+	role text not null
 );
+
+alter table roles
+	add constraint roles_pk
+		primary key ("roleId");
+/*----------------------------------------------------------*/
+
+/*----------------------------------------------------------*/
+create table users
+(
+	"userId" serial not null,
+	username text not null,
+	password text not null,
+	email text not null,
+	"firstName" text not null,
+	surname text not null,
+	phone text,
+	activated boolean default True not null,
+	"roleId" int not null
+		constraint "FK_users_roles"
+			references roles,
+	"addressId" int not null
+		constraint "FK_users_addresses"
+			references addresses
+);
+
+create unique index users_username_uindex
+	on users (username);
+
+alter table users
+	add constraint users_pk
+		primary key ("userId");
+/*----------------------------------------------------------*/
+
 
 create table if not exists comments (
     commentId int generated always as identity,
