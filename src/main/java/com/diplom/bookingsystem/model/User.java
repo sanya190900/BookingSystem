@@ -47,4 +47,16 @@ public class User {
   @NotNull
   @Enumerated(EnumType.STRING)
   private Role role;
+
+  public User(String username, String password, String email, String name, String surname,
+      String phone, Address address, Role role) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.name = name;
+    this.surname = surname;
+    this.phone = phone;
+    this.address = address;
+    this.role = role;
+  }
 }
