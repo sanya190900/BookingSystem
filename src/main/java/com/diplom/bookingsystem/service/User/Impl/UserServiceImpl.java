@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDto userDto) {
         User user = new User(userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()),
             userDto.getEmail(), userDto.getName(), userDto.getSurname(), userDto.getPhone(),
-            userDto.getAddress(), userDto.getRole());
+            userDto.getAddress());
         userRepository.save(user);
     }
 }
