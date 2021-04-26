@@ -1,13 +1,16 @@
 package com.diplom.bookingsystem.dto;
 
 import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.ERole;
 import com.diplom.bookingsystem.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Set;
+
+@AllArgsConstructor
 @Data
 public class UserDto {
-
-  private Integer user_id;
 
   private String username;
 
@@ -23,5 +26,5 @@ public class UserDto {
 
   private Address address;
 
-  private Role role;
+  private Set<String> role;
 }

@@ -14,7 +14,7 @@ import lombok.*;
 public class Address {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer address_id;
+  private Long address_id;
 
   @NotNull
   private String country;
