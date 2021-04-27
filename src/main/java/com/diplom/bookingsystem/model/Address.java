@@ -1,7 +1,5 @@
 package com.diplom.bookingsystem.model;
 
-import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 

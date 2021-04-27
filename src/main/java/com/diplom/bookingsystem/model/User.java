@@ -6,7 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,6 +57,9 @@ public class User {
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
+
+  @CreationTimestamp
+  private LocalDateTime creation_date_time;
 
   public User(String username, String password, String email, String name, String surname,
       String phone, Address address) {

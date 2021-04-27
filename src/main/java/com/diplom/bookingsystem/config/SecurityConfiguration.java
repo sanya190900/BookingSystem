@@ -16,6 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -52,11 +54,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
             .authorizeRequests().antMatchers("/user/**").permitAll()
             .antMatchers("/test/**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated()
+            .and()
+            .logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+            .logoutSuccessUrl("/user/revoke")
+            .and()
+            .exceptionHandling()
+            .accessDeniedPage("/403");
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
   }
