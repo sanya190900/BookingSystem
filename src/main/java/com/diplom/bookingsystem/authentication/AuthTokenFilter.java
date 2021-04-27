@@ -32,8 +32,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
 
-  private String jwtSecret="superBookingSystem!";
-
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
   @Autowired
