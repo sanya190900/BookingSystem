@@ -46,7 +46,7 @@ public class User {
 
   private String phone;
 
-  private boolean activated = true;
+  private boolean enabled = true;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "address_id", referencedColumnName = "address_id")

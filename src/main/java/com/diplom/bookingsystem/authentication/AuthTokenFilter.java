@@ -1,28 +1,20 @@
 package com.diplom.bookingsystem.authentication;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.diplom.bookingsystem.model.JwtBlacklist;
 import com.diplom.bookingsystem.repository.JwtBlacklistRepository;
 import com.diplom.bookingsystem.service.User.Impl.UserDetailsServiceImpl;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
@@ -37,17 +29,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   @Autowired
   public JwtBlacklistRepository jwtBlacklistRepository;
 
-  @PostConstruct
-  public void init() {
-    SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-  }
-
   @Override
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
           throws IOException, ServletException {
     try {
       String jwt = parseJwt(req);
-      if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+      if (jwt != null && jwtUtils.validateJwtToken(jwt, req)) {
         String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);

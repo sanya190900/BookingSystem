@@ -14,7 +14,7 @@ public class JwtBlacklistServiceImpl implements JwtBlacklistService {
     @Autowired
     private JwtBlacklistRepository jwtBlacklistRepository;
 
-    @Scheduled(cron = "* */10 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void purgeExpired() {
         LocalDateTime now = LocalDateTime.now();
