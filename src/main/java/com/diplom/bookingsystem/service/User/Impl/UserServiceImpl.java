@@ -5,13 +5,11 @@ import com.diplom.bookingsystem.dto.AuthRequestDto;
 import com.diplom.bookingsystem.dto.JwtResponse;
 import com.diplom.bookingsystem.dto.MessageResponse;
 import com.diplom.bookingsystem.dto.UserDto;
-import com.diplom.bookingsystem.model.ERole;
-import com.diplom.bookingsystem.model.JwtBlacklist;
-import com.diplom.bookingsystem.model.Role;
-import com.diplom.bookingsystem.model.User;
+import com.diplom.bookingsystem.model.*;
 import com.diplom.bookingsystem.repository.JwtBlacklistRepository;
 import com.diplom.bookingsystem.repository.RoleRepository;
 import com.diplom.bookingsystem.repository.UserRepository;
+import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +48,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
@@ -109,14 +110,18 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(authRequestDto.getUsername(), authRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(userPrincipal);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
         return ResponseEntity.ok(new JwtResponse(jwt,
+                refreshToken.getToken(),
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),

@@ -1,7 +1,9 @@
 package com.diplom.bookingsystem.controller;
 
 import com.diplom.bookingsystem.dto.AuthRequestDto;
+import com.diplom.bookingsystem.dto.TokenRefreshRequest;
 import com.diplom.bookingsystem.dto.UserDto;
+import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDto userDto) {
@@ -28,5 +33,10 @@ public class UserController {
     @RequestMapping("/revoke")
     public void revokeToken(HttpServletRequest request) {
         userService.unAuthUser(request);
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
+        return refreshTokenService.refreshAccessToken(request);
     }
 }

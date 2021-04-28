@@ -14,6 +14,7 @@ public class JwtBlacklistServiceImpl implements JwtBlacklistService {
     @Autowired
     private JwtBlacklistRepository jwtBlacklistRepository;
 
+    @Override
     @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void purgeExpired() {
