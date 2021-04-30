@@ -98,7 +98,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> authUser(AuthRequestDto authRequestDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequestDto.getUsername(), authRequestDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(authRequestDto.getUsername(),
+                        authRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
