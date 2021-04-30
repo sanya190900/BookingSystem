@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface UserService {
   ResponseEntity<?> saveUser(UserDto userDto);
 
+  ResponseEntity<?> updateUser(UserDto userDto, HttpServletRequest request);
+
   ResponseEntity<?> authUser(AuthRequestDto authRequestDto);
 
   void unAuthUser(HttpServletRequest request);

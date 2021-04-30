@@ -2,7 +2,7 @@ package com.diplom.bookingsystem.config;
 
 import com.diplom.bookingsystem.authentication.AuthEntryPointJwt;
 import com.diplom.bookingsystem.authentication.AuthTokenFilter;
-import com.diplom.bookingsystem.service.User.Impl.UserDetailsServiceImpl;
+import com.diplom.bookingsystem.service.UserDetails.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -58,7 +57,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests().antMatchers("/user/**").permitAll()
+            .authorizeRequests()
+            .antMatchers("/user/signup", "/user/login", "/user/refreshtoken").permitAll()
             .antMatchers("/test/**").permitAll()
             .anyRequest().authenticated()
             .and()

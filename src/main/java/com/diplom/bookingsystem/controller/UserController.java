@@ -30,8 +30,13 @@ public class UserController {
         return userService.authUser(authRequestDto);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request) {
+        return userService.updateUser(userDto, request);
+    }
+
     @RequestMapping("/revoke")
-    public void revokeToken(HttpServletRequest request) {
+    public void unAuthorizeUser(HttpServletRequest request) {
         userService.unAuthUser(request);
     }
 

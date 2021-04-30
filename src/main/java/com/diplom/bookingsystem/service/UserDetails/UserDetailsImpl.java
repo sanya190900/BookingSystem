@@ -1,4 +1,4 @@
-package com.diplom.bookingsystem.service.User.Impl;
+package com.diplom.bookingsystem.service.UserDetails;
 
 import com.diplom.bookingsystem.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
