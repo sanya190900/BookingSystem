@@ -13,5 +13,9 @@ public interface UserService {
 
   ResponseEntity<?> authUser(AuthRequestDto authRequestDto);
 
-  void unAuthUser(HttpServletRequest request);
+  ResponseEntity<?> unAuthUser(HttpServletRequest request);
+
+  ResponseEntity<?> getUser();
+
+  ResponseEntity<?> deleteUser(HttpServletRequest request);
 }

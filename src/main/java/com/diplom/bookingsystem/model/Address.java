@@ -27,5 +27,6 @@ public class Address {
   private String house_number;
 
   @OneToOne(mappedBy = "address")
+  @Transient
   private User user;
 }

@@ -13,6 +13,7 @@ import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import com.diplom.bookingsystem.service.UserDetails.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,14 +58,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Username is already taken!"));
+            return new ResponseEntity<>("Username is already taken.", HttpStatus.BAD_REQUEST);
         }
 
         userRepository.save(makeUser(userDto));
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
 
     @Override
@@ -74,16 +72,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
 
-        if (!user.getUser_id().equals(userDto.getUser_id()))
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Access denied!"));
-
         if (userRepository.existsByUsername(userDto.getUsername()) &&
                 !userDto.getUsername().equals(user.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Username is already taken!"));
+            return new ResponseEntity<>("Username is already taken: " + userDto.getUsername(), HttpStatus.BAD_REQUEST);
         }
 
         if(!userDto.getUsername().equals(user.getUsername()) ||
@@ -92,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(makeUser(userDto));
 
-        return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
+        return new ResponseEntity<>(userRepository.findByUsername(userDto.getUsername()), HttpStatus.OK);
     }
 
     @Override
@@ -122,13 +113,37 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void unAuthUser(HttpServletRequest request) {
+    public ResponseEntity<?> unAuthUser(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
 
         JwtBlacklist jwtBlacklist = new JwtBlacklist();
         jwtBlacklist.setToken(token);
         jwtBlacklist.setExpiryDate(LocalDateTime.now().plusMinutes(10));
         jwtBlacklistRepository.save(jwtBlacklist);
+
+        return ResponseEntity.ok(new MessageResponse("User unauthenticated successfully."));
+    }
+
+    @Override
+    public ResponseEntity<?> getUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteUser(HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+
+        unAuthUser(request);
+
+        userRepository.delete(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private User makeUser(UserDto userDto) {

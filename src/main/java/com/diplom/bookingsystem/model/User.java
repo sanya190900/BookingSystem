@@ -28,6 +28,7 @@ public class User {
   @Column(nullable = false)
   private String username;
 
+  @Transient
   @Size(min = 6)
   private String password;
 
@@ -59,6 +60,7 @@ public class User {
   private Set<Role> roles = new HashSet<>();
 
   @CreationTimestamp
+  @Column(nullable = false, updatable = false)
   private LocalDateTime creation_date_time;
 
   public User(String username, String password, String email, String name, String surname,
