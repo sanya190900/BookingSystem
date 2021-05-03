@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,7 +29,7 @@ public class User {
   @Column(nullable = false)
   private String username;
 
-  @Transient
+  @JsonIgnore
   @Size(min = 6)
   private String password;
 
@@ -64,7 +65,7 @@ public class User {
   private LocalDateTime creation_date_time;
 
   public User(String username, String password, String email, String name, String surname,
-      String phone, Address address) {
+      String phone, Address address, LocalDateTime creation_date_time) {
     this.username = username;
     this.password = password;
     this.email = email;
@@ -72,5 +73,6 @@ public class User {
     this.surname = surname;
     this.phone = phone;
     this.address = address;
+    this.creation_date_time = creation_date_time;
   }
 }

@@ -1,6 +1,7 @@
 package com.diplom.bookingsystem.repository;
 
 import com.diplom.bookingsystem.model.RefreshToken;
+import com.diplom.bookingsystem.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,9 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
 
     @Transactional
     void deleteByExpiryDateLessThan(LocalDateTime now);
+
+    Boolean existsByUser(User user);
+
+    @Transactional
+    void deleteByUser(User user);
 }

@@ -3,6 +3,7 @@ package com.diplom.bookingsystem.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data
@@ -27,6 +28,6 @@ public class Address {
   private String house_number;
 
   @OneToOne(mappedBy = "address")
-  @Transient
+  @JsonIgnore
   private User user;
 }

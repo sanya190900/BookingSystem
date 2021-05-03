@@ -61,9 +61,9 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>("Username is already taken.", HttpStatus.BAD_REQUEST);
         }
 
-        userRepository.save(makeUser(userDto));
+        userRepository.save(makeUser(userDto, null));
 
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(userRepository.findByUsername(userDto.getUsername()), HttpStatus.CREATED);
     }
 
     @Override
@@ -81,7 +81,10 @@ public class UserServiceImpl implements UserService {
                 !passwordEncoder.matches(userDto.getPassword(), user.getPassword()))
             unAuthUser(request);
 
-        userRepository.save(makeUser(userDto));
+        Address address = userDto.getAddress();
+        address.setAddress_id(user.getAddress().getAddress_id());
+        userDto.setAddress(address);
+        userRepository.save(makeUser(userDto, user.getCreation_date_time()));
 
         return new ResponseEntity<>(userRepository.findByUsername(userDto.getUsername()), HttpStatus.OK);
     }
@@ -121,6 +124,9 @@ public class UserServiceImpl implements UserService {
         jwtBlacklist.setExpiryDate(LocalDateTime.now().plusMinutes(10));
         jwtBlacklistRepository.save(jwtBlacklist);
 
+        if (refreshTokenRepository.existsByUser(user))
+            refreshTokenRepository.deleteByUser(user);
+
         return ResponseEntity.ok(new MessageResponse("User unauthenticated successfully."));
     }
 
@@ -133,6 +139,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<?> deleteUser(HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -146,14 +153,16 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private User makeUser(UserDto userDto) {
+    private User makeUser(UserDto userDto, LocalDateTime creationDateTime) {
         User user = new User(userDto.getUsername(),
                 passwordEncoder.encode(userDto.getPassword()),
                 userDto.getEmail(),
                 userDto.getName(),
                 userDto.getSurname(),
                 userDto.getPhone(),
-                userDto.getAddress());
+                userDto.getAddress(),
+                creationDateTime
+                );
 
         if (userDto.getUser_id() != null)
             user.setUser_id(userDto.getUser_id());
