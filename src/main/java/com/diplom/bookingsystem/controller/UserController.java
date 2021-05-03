@@ -36,7 +36,6 @@ public class UserController {
         return userService.authUser(authRequestDto);
     }
 
-    //TODO: creation date time after null
     @PutMapping()
     @PreAuthorize("#userDto.user_id == authentication.principal.id or hasRole('ADMIN')")
     public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request) {
@@ -53,7 +52,6 @@ public class UserController {
         return refreshTokenService.refreshAccessToken(request);
     }
 
-    //TODO:ono-to-ono unidirectional FK not deleting
     @DeleteMapping()
     public ResponseEntity<?> deleteUser(HttpServletRequest request) {
         return userService.deleteUser(request);
