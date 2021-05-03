@@ -7,6 +7,7 @@ import com.diplom.bookingsystem.dto.MessageResponse;
 import com.diplom.bookingsystem.dto.UserDto;
 import com.diplom.bookingsystem.model.*;
 import com.diplom.bookingsystem.repository.JwtBlacklistRepository;
+import com.diplom.bookingsystem.repository.RefreshTokenRepository;
 import com.diplom.bookingsystem.repository.RoleRepository;
 import com.diplom.bookingsystem.repository.UserRepository;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
@@ -54,6 +55,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RefreshTokenService refreshTokenService;
+
+    @Autowired
+    RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
@@ -117,6 +121,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ResponseEntity<?> unAuthUser(HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
         String token = request.getHeader("Authorization").substring(7);
 
         JwtBlacklist jwtBlacklist = new JwtBlacklist();
