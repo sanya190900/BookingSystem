@@ -1,6 +1,7 @@
 package com.diplom.bookingsystem.controller;
 
 import com.diplom.bookingsystem.dto.AuthRequestDto;
+import com.diplom.bookingsystem.dto.PasswordDto;
 import com.diplom.bookingsystem.dto.TokenRefreshRequest;
 import com.diplom.bookingsystem.dto.UserDto;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
@@ -26,7 +27,7 @@ public class UserController {
         return userService.getUser();
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDto userDto) {
         return userService.saveUser(userDto);
     }
@@ -55,5 +56,20 @@ public class UserController {
     @DeleteMapping()
     public ResponseEntity<?> deleteUser(HttpServletRequest request) {
         return userService.deleteUser(request);
+    }
+
+    @PostMapping("/disable")
+    public ResponseEntity<?> disableUser(HttpServletRequest request) {
+        return userService.disableUser(request);
+    }
+
+    @PostMapping("/password/recovery")
+    public ResponseEntity<?> recoveryPassword(@RequestBody String username) {
+        return userService.recoveryPassword(username);
+    }
+
+    @PostMapping("/password/update")
+    public ResponseEntity<?> updatePassword(@Valid @RequestBody PasswordDto passwordDto) {
+        return userService.updatePassword(passwordDto);
     }
 }

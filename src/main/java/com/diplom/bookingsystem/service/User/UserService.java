@@ -1,6 +1,7 @@
 package com.diplom.bookingsystem.service.User;
 
 import com.diplom.bookingsystem.dto.AuthRequestDto;
+import com.diplom.bookingsystem.dto.PasswordDto;
 import com.diplom.bookingsystem.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 
@@ -18,4 +19,10 @@ public interface UserService {
   ResponseEntity<?> getUser();
 
   ResponseEntity<?> deleteUser(HttpServletRequest request);
+
+  ResponseEntity<?> disableUser(HttpServletRequest request);
+
+  ResponseEntity<?> recoveryPassword(String username);
+
+  ResponseEntity<?> updatePassword(PasswordDto passwordDto);
 }

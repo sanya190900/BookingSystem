@@ -1,15 +1,9 @@
 package com.diplom.bookingsystem.service.User.Impl;
 
 import com.diplom.bookingsystem.authentication.JwtUtils;
-import com.diplom.bookingsystem.dto.AuthRequestDto;
-import com.diplom.bookingsystem.dto.JwtResponse;
-import com.diplom.bookingsystem.dto.MessageResponse;
-import com.diplom.bookingsystem.dto.UserDto;
+import com.diplom.bookingsystem.dto.*;
 import com.diplom.bookingsystem.model.*;
-import com.diplom.bookingsystem.repository.JwtBlacklistRepository;
-import com.diplom.bookingsystem.repository.RefreshTokenRepository;
-import com.diplom.bookingsystem.repository.RoleRepository;
-import com.diplom.bookingsystem.repository.UserRepository;
+import com.diplom.bookingsystem.repository.*;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import com.diplom.bookingsystem.service.UserDetails.UserDetailsImpl;
@@ -28,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +51,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
 
+    @Autowired
+    RecoveryTokenRepository recoveryTokenRepository;
+
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
@@ -72,9 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> updateUser(UserDto userDto, HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+        User user = getAuthenticatedUser();
 
         if (userRepository.existsByUsername(userDto.getUsername()) &&
                 !userDto.getUsername().equals(user.getUsername())) {
@@ -121,9 +114,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ResponseEntity<?> unAuthUser(HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+        User user = getAuthenticatedUser();
         String token = request.getHeader("Authorization").substring(7);
 
         JwtBlacklist jwtBlacklist = new JwtBlacklist();
@@ -139,9 +130,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> getUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+        User user = getAuthenticatedUser();
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -149,15 +138,66 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ResponseEntity<?> deleteUser(HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
+        User user = getAuthenticatedUser();
 
         unAuthUser(request);
 
         userRepository.delete(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> disableUser(HttpServletRequest request) {
+        User user = getAuthenticatedUser();
+
+        unAuthUser(request);
+
+        user.setEnabled(false);
+        userRepository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> recoveryPassword(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
+        String token = UUID.randomUUID().toString();
+
+        //try {
+        RecoveryToken recoveryToken = new RecoveryToken(user, token, LocalDateTime.now().plusMinutes(60));
+        recoveryTokenRepository.save(recoveryToken);
+            //String recoverPasswordLink = "http://localhost:4200/password/change?token=" + token;
+
+            //new Thread(() -> emailService.sendMessageWithAttachment(email, SUBJECT, recoverPasswordLink, PATH_TO_ATTACHMENT)).start();
+        //} catch (UserNotFoundException e) {
+            //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        //}
+        return new ResponseEntity<>(recoveryToken, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> updatePassword(PasswordDto passwordDto) {
+        RecoveryToken recoveryToken = recoveryTokenRepository
+                .findRecoveryTokenByToken(passwordDto.getToken())
+                .orElseThrow(() -> new UsernameNotFoundException("Token Not Found: " + passwordDto.getToken()));
+
+        final LocalDateTime localDateTime = LocalDateTime.now();
+        if (localDateTime.isAfter(recoveryToken.getExpiryDate()))
+            return new ResponseEntity<>("Recovery token is expired.", HttpStatus.BAD_REQUEST);
+
+        User user = recoveryToken.getUser();
+        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+        userRepository.save(user);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    private User getAuthenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
     }
 
     private User makeUser(UserDto userDto, LocalDateTime creationDateTime) {
