@@ -1,7 +1,7 @@
 package com.diplom.bookingsystem.service.RefreshToken;
 
-import com.diplom.bookingsystem.dto.TokenRefreshRequest;
-import com.diplom.bookingsystem.model.RefreshToken;
+import com.diplom.bookingsystem.dto.User.TokenRefreshRequest;
+import com.diplom.bookingsystem.model.User.RefreshToken;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 

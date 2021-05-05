@@ -1,7 +1,7 @@
 package com.diplom.bookingsystem.repository;
 
-import com.diplom.bookingsystem.model.RefreshToken;
-import com.diplom.bookingsystem.model.User;
+import com.diplom.bookingsystem.model.User.RefreshToken;
+import com.diplom.bookingsystem.model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;

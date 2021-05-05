@@ -1,4 +1,4 @@
-package com.diplom.bookingsystem.model;
+package com.diplom.bookingsystem.model.User;
 
 public enum ERole {
     ROLE_ADMIN,

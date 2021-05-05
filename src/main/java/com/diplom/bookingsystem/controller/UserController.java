@@ -1,9 +1,9 @@
 package com.diplom.bookingsystem.controller;
 
-import com.diplom.bookingsystem.dto.AuthRequestDto;
-import com.diplom.bookingsystem.dto.PasswordDto;
-import com.diplom.bookingsystem.dto.TokenRefreshRequest;
-import com.diplom.bookingsystem.dto.UserDto;
+import com.diplom.bookingsystem.dto.User.AuthRequestDto;
+import com.diplom.bookingsystem.dto.User.PasswordDto;
+import com.diplom.bookingsystem.dto.User.TokenRefreshRequest;
+import com.diplom.bookingsystem.dto.User.UserDto;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.diplom.bookingsystem.model;
+package com.diplom.bookingsystem.model.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

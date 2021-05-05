@@ -1,8 +1,8 @@
 package com.diplom.bookingsystem.service.User;
 
-import com.diplom.bookingsystem.dto.AuthRequestDto;
-import com.diplom.bookingsystem.dto.PasswordDto;
-import com.diplom.bookingsystem.dto.UserDto;
+import com.diplom.bookingsystem.dto.User.AuthRequestDto;
+import com.diplom.bookingsystem.dto.User.PasswordDto;
+import com.diplom.bookingsystem.dto.User.UserDto;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;

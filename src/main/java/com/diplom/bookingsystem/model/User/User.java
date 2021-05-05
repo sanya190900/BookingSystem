@@ -1,10 +1,12 @@
-package com.diplom.bookingsystem.model;
+package com.diplom.bookingsystem.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.Place.Place;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,6 +50,8 @@ public class User {
 
   private String phone;
 
+  private String pathToAvatar;
+
   private boolean enabled = true;
 
   @OneToOne(cascade = CascadeType.ALL)
@@ -64,14 +68,18 @@ public class User {
   @Column(nullable = false, updatable = false)
   private LocalDateTime creation_date_time;
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<Place> places;
+
   public User(String username, String password, String email, String name, String surname,
-      String phone, Address address, LocalDateTime creation_date_time) {
+      String phone, String pathToAvatar, Address address, LocalDateTime creation_date_time) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.name = name;
     this.surname = surname;
     this.phone = phone;
+    this.pathToAvatar = pathToAvatar;
     this.address = address;
     this.creation_date_time = creation_date_time;
   }

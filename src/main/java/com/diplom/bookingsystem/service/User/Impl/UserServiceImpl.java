@@ -1,8 +1,9 @@
 package com.diplom.bookingsystem.service.User.Impl;
 
 import com.diplom.bookingsystem.authentication.JwtUtils;
-import com.diplom.bookingsystem.dto.*;
-import com.diplom.bookingsystem.model.*;
+import com.diplom.bookingsystem.dto.User.*;
+import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.User.*;
 import com.diplom.bookingsystem.repository.*;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            return new ResponseEntity<>("Username is already taken.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Username is already taken: " + userDto.getUsername(), HttpStatus.BAD_REQUEST);
         }
 
         userRepository.save(makeUser(userDto, null));
@@ -177,6 +178,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(recoveryToken, HttpStatus.OK);
     }
 
+
     @Override
     public ResponseEntity<?> updatePassword(PasswordDto passwordDto) {
         RecoveryToken recoveryToken = recoveryTokenRepository
@@ -190,6 +192,8 @@ public class UserServiceImpl implements UserService {
         User user = recoveryToken.getUser();
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
         userRepository.save(user);
+
+        recoveryTokenRepository.deleteByUser(user);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -207,6 +211,7 @@ public class UserServiceImpl implements UserService {
                 userDto.getName(),
                 userDto.getSurname(),
                 userDto.getPhone(),
+                userDto.getPathToAvatar(),
                 userDto.getAddress(),
                 creationDateTime
                 );

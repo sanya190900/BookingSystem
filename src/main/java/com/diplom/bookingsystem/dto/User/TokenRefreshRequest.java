@@ -1,4 +1,4 @@
-package com.diplom.bookingsystem.dto;
+package com.diplom.bookingsystem.dto.User;
 
 import lombok.Data;
 

@@ -1,16 +1,17 @@
 package com.diplom.bookingsystem.repository;
 
-import com.diplom.bookingsystem.model.User.JwtBlacklist;
+import com.diplom.bookingsystem.model.Place.Place;
+import com.diplom.bookingsystem.model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RepositoryRestResource(exported = false)
 @Repository
-public interface JwtBlacklistRepository extends JpaRepository<JwtBlacklist, Long> {
-    Boolean existsByToken(String username);
+public interface PlaceRepository extends JpaRepository<Place, Long> {
+    Boolean existsByName(String name);
 
-    void deleteByExpiryDateLessThan(LocalDateTime now);
+    Optional<Place> findByName(String name);
 }

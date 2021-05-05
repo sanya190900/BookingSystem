@@ -3,6 +3,8 @@ package com.diplom.bookingsystem.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.diplom.bookingsystem.model.Place.Place;
+import com.diplom.bookingsystem.model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -30,4 +32,8 @@ public class Address {
   @OneToOne(mappedBy = "address")
   @JsonIgnore
   private User user;
+
+  @OneToOne(mappedBy = "address")
+  @JsonIgnore
+  private Place place;
 }

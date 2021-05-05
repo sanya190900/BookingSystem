@@ -1,6 +1,6 @@
 package com.diplom.bookingsystem.service.UserDetails;
 
-import com.diplom.bookingsystem.model.User;
+import com.diplom.bookingsystem.model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

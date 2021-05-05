@@ -1,6 +1,6 @@
 package com.diplom.bookingsystem.service.UserDetails;
 
-import com.diplom.bookingsystem.model.User;
+import com.diplom.bookingsystem.model.User.User;
 import com.diplom.bookingsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

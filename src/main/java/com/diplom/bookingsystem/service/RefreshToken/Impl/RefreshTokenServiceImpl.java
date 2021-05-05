@@ -1,10 +1,10 @@
 package com.diplom.bookingsystem.service.RefreshToken.Impl;
 
 import com.diplom.bookingsystem.authentication.JwtUtils;
-import com.diplom.bookingsystem.dto.TokenRefreshRequest;
-import com.diplom.bookingsystem.dto.TokenRefreshResponse;
+import com.diplom.bookingsystem.dto.User.TokenRefreshRequest;
+import com.diplom.bookingsystem.dto.User.TokenRefreshResponse;
 import com.diplom.bookingsystem.exceptions.TokenRefreshException;
-import com.diplom.bookingsystem.model.RefreshToken;
+import com.diplom.bookingsystem.model.User.RefreshToken;
 import com.diplom.bookingsystem.repository.RefreshTokenRepository;
 import com.diplom.bookingsystem.repository.UserRepository;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;

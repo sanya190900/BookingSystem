@@ -62,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/user/password/**").permitAll()
             .antMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**").permitAll()
             .antMatchers("/test/**").permitAll()
+            .antMatchers("/place/{\\d+}").permitAll()
             .anyRequest().authenticated()
             .and()
             .logout()

@@ -1,8 +1,6 @@
-package com.diplom.bookingsystem.dto;
+package com.diplom.bookingsystem.dto.User;
 
 import com.diplom.bookingsystem.model.Address;
-import com.diplom.bookingsystem.model.ERole;
-import com.diplom.bookingsystem.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -24,6 +22,8 @@ public class UserDto {
   private String surname;
 
   private String phone;
+
+  private String pathToAvatar;
 
   private Address address;
 
