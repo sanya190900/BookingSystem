@@ -8,7 +8,8 @@ import com.diplom.bookingsystem.model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "addresses")

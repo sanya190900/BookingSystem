@@ -6,8 +6,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.Comment.Comment;
 import com.diplom.bookingsystem.model.Place.Place;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,7 +17,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "users",
@@ -70,6 +73,10 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Place> places;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @JsonIgnore
+  private Set<Comment> comments;
 
   public User(String username, String password, String email, String name, String surname,
       String phone, String pathToAvatar, Address address, LocalDateTime creation_date_time) {

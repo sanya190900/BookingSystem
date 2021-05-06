@@ -40,20 +40,18 @@ public class PlaceServiceImpl implements PlaceService {
             return new ResponseEntity<>("Name is already exist.", HttpStatus.BAD_REQUEST);
         }
 
-        placeRepository.save(makePlace(placeDto));
-
-        return new ResponseEntity<>(placeRepository.findByName(placeDto.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(placeRepository.save(makePlace(placeDto)), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<?> updatePlace(PlaceDto placeDto) {
-        if (placeRepository.existsByName(placeDto.getName())) {
-            return new ResponseEntity<>("Name is already exist.", HttpStatus.BAD_REQUEST);
-        }
-
         Place place = placeRepository
                 .findById(placeDto.getPlace_id())
                 .orElseThrow(() -> new PlaceNotFoundException("Place not found, id: " + placeDto.getPlace_id()));
+
+        if (placeRepository.existsByName(placeDto.getName()) && !placeDto.getName().equals(place.getName())) {
+            return new ResponseEntity<>("Name is already exist.", HttpStatus.BAD_REQUEST);
+        }
 
         Address address = placeDto.getAddress();
         address.setAddress_id(place.getAddress().getAddress_id());

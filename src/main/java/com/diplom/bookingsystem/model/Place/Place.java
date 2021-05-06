@@ -1,16 +1,19 @@
 package com.diplom.bookingsystem.model.Place;
 
 import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.Comment.Comment;
 import com.diplom.bookingsystem.model.User.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "places",
         uniqueConstraints = {
@@ -36,8 +39,11 @@ public class Place {
     private String name;
 
     @NotBlank
-    @Lob
+    @Column(columnDefinition = "text")
     private String description;
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 
     public Place(Address address, String name, String description) {
         this.address = address;

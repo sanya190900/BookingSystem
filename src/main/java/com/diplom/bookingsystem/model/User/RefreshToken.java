@@ -1,7 +1,9 @@
 package com.diplom.bookingsystem.model.User;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +11,8 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name="refresh_token")
 public class RefreshToken {
     @Id
