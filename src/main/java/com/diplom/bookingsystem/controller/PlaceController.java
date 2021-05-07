@@ -1,6 +1,8 @@
 package com.diplom.bookingsystem.controller;
 
+import com.diplom.bookingsystem.dto.Place.GalleryDto;
 import com.diplom.bookingsystem.dto.Place.PlaceDto;
+import com.diplom.bookingsystem.model.Place.Gallery;
 import com.diplom.bookingsystem.service.Place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +29,15 @@ public class PlaceController {
         return placeService.createPlace(placeDto);
     }
 
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("#placeDto.user.user_id == authentication.principal.id or hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updatePlace(@Valid @RequestBody PlaceDto placeDto) {
         return placeService.updatePlace(placeDto);
     }
 
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePlace(@PathVariable Long id) {
-        return placeService.deletePlace(id);
+    @PreAuthorize("#placeDto.user.user_id == authentication.principal.id or hasRole('ADMIN')")
+    @DeleteMapping
+    public ResponseEntity<?> deletePlace(@Valid @RequestBody PlaceDto placeDto) {
+        return placeService.deletePlace(placeDto.getPlace_id());
     }
 }

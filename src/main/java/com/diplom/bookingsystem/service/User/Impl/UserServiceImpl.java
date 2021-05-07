@@ -5,6 +5,7 @@ import com.diplom.bookingsystem.dto.User.*;
 import com.diplom.bookingsystem.model.Address;
 import com.diplom.bookingsystem.model.User.*;
 import com.diplom.bookingsystem.repository.*;
+import com.diplom.bookingsystem.service.Mail.EmailService;
 import com.diplom.bookingsystem.service.RefreshToken.RefreshTokenService;
 import com.diplom.bookingsystem.service.User.UserService;
 import com.diplom.bookingsystem.service.UserDetails.UserDetailsImpl;
@@ -22,6 +23,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Email;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,10 +56,16 @@ public class UserServiceImpl implements UserService {
     RefreshTokenService refreshTokenService;
 
     @Autowired
+    EmailService emailService;
+
+    @Autowired
     RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
     RecoveryTokenRepository recoveryTokenRepository;
+
+    private String SUBJECT = "Recovery Password";
+    private String PATH_TO_ATTACHMENT = "src/main/resources/email/recovery-password.html";
 
     @Override
     public ResponseEntity<?> saveUser(UserDto userDto) {
@@ -61,9 +73,7 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>("Username is already taken: " + userDto.getUsername(), HttpStatus.BAD_REQUEST);
         }
 
-        userRepository.save(makeUser(userDto, null));
-
-        return new ResponseEntity<>(userRepository.findByUsername(userDto.getUsername()), HttpStatus.CREATED);
+        return new ResponseEntity<>(userRepository.save(makeUser(userDto, null)), HttpStatus.CREATED);
     }
 
     @Override
@@ -165,17 +175,21 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
         String token = UUID.randomUUID().toString();
-
-        //try {
         RecoveryToken recoveryToken = new RecoveryToken(user, token, LocalDateTime.now().plusMinutes(60));
-        recoveryTokenRepository.save(recoveryToken);
-            //String recoverPasswordLink = "http://localhost:4200/password/change?token=" + token;
 
-            //new Thread(() -> emailService.sendMessageWithAttachment(email, SUBJECT, recoverPasswordLink, PATH_TO_ATTACHMENT)).start();
-        //} catch (UserNotFoundException e) {
-            //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        //}
-        return new ResponseEntity<>(recoveryToken, HttpStatus.OK);
+        try {
+            String recoverPasswordLink = "http://localhost:4200/password/change?token=" + token;
+
+            new Thread(() -> emailService.sendMessageWithAttachment(
+                    user.getEmail(),
+                    SUBJECT,
+                    recoverPasswordLink,
+                    PATH_TO_ATTACHMENT)).start();
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>("User Not Found: " + username, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(recoveryTokenRepository.save(recoveryToken), HttpStatus.OK);
     }
 
 
@@ -196,6 +210,24 @@ public class UserServiceImpl implements UserService {
         recoveryTokenRepository.deleteByUser(user);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @Override
+    public Optional<String> addLinkToEmail(String link, String pathToEmail) {
+        File file = new File(pathToEmail);
+
+        StringBuilder htmlStringBuilder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+
+            while (reader.ready()) {
+                htmlStringBuilder.append(reader.readLine());
+            }
+            return Optional.of(String.format(htmlStringBuilder.toString(), link));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     private User getAuthenticatedUser() {

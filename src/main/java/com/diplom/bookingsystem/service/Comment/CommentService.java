@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface CommentService {
     ResponseEntity<?> createComment(CommentDto commentDto);
 
-    ResponseEntity<?> deleteComment(CommentDto commentDto);
+    ResponseEntity<?> deleteComment(Long id);
 }

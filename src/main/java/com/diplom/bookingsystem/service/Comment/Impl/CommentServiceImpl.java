@@ -38,8 +38,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseEntity<?> deleteComment(CommentDto commentDto) {
-        commentRepository.deleteById(commentDto.getComment_id());
+    public ResponseEntity<?> deleteComment(Long id) {
+        commentRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

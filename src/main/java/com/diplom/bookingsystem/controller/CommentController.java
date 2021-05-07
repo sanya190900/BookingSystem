@@ -28,6 +28,6 @@ public class CommentController {
     @PreAuthorize("#commentDto.user.user_id == authentication.principal.id or hasRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<?> deleteComment(@Valid @RequestBody CommentDto commentDto) {
-        return commentService.deleteComment(commentDto);
+        return commentService.deleteComment(commentDto.getComment_id());
     }
 }

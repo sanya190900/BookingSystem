@@ -38,12 +38,7 @@ public class Comment {
         this.user = user;
     }
 
-    // TODO: table gallery for places (first photo is avatar)
-
     // TODO: WORKING TIME!!!
-    // TODO: create services (ENUM)
-
-    // TODO: send mail
 
     // TODO: front end
 }

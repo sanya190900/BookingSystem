@@ -1,0 +1,15 @@
+package com.diplom.bookingsystem.model.Place;
+
+public enum EService {
+    SERVICE_WIFI,
+    SERVICE_TV,
+    SERVICE_POOL,
+    SERVICE_BAR,
+    SERVICE_SHOWER,
+    SERVICE_TRANSFER,
+    SERVICE_BREAKFAST,
+    SERVICE_FITNESS,
+    SERVICE_PARKING,
+    SERVICE_ANIMALS,
+    SERVICE_EXCURSION
+}

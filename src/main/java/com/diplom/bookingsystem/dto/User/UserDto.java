@@ -3,10 +3,12 @@ package com.diplom.bookingsystem.dto.User;
 import com.diplom.bookingsystem.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class UserDto {
   private Long user_id;

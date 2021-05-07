@@ -6,6 +6,7 @@ import com.diplom.bookingsystem.dto.User.UserDto;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public interface UserService {
   ResponseEntity<?> saveUser(UserDto userDto);
@@ -25,4 +26,6 @@ public interface UserService {
   ResponseEntity<?> recoveryPassword(String username);
 
   ResponseEntity<?> updatePassword(PasswordDto passwordDto);
+
+  Optional<String> addLinkToEmail(String link, String pathToEmail);
 }

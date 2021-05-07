@@ -3,12 +3,12 @@ package com.diplom.bookingsystem.model.Place;
 import com.diplom.bookingsystem.model.Address;
 import com.diplom.bookingsystem.model.Comment.Comment;
 import com.diplom.bookingsystem.model.User.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -44,6 +44,15 @@ public class Place {
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private Set<Gallery> gallery;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "places_services",
+            joinColumns = @JoinColumn(name = "place_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private Set<Service> services = new HashSet<>();
 
     public Place(Address address, String name, String description) {
         this.address = address;
