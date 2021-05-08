@@ -3,6 +3,7 @@ package com.diplom.bookingsystem.controller;
 import com.diplom.bookingsystem.dto.Place.GalleryDto;
 import com.diplom.bookingsystem.dto.Place.PlaceDto;
 import com.diplom.bookingsystem.model.Place.Gallery;
+import com.diplom.bookingsystem.repository.PlaceRepository;
 import com.diplom.bookingsystem.service.Place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class PlaceController {
     @Autowired
     PlaceService placeService;
 
+    @Autowired
+    PlaceRepository placeRepository;
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getPlace(@PathVariable Long id) {
         return placeService.getPlace(id);
@@ -29,13 +33,13 @@ public class PlaceController {
         return placeService.createPlace(placeDto);
     }
 
-    @PreAuthorize("#placeDto.user.user_id == authentication.principal.id or hasRole('ADMIN')")
+    @PreAuthorize("@creatorCheck.getOwner_id(#placeDto.place_id, authentication.principal.id) or hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updatePlace(@Valid @RequestBody PlaceDto placeDto) {
         return placeService.updatePlace(placeDto);
     }
 
-    @PreAuthorize("#placeDto.user.user_id == authentication.principal.id or hasRole('ADMIN')")
+    @PreAuthorize("@creatorCheck.getOwner_id(#placeDto.place_id, authentication.principal.id) or hasRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<?> deletePlace(@Valid @RequestBody PlaceDto placeDto) {
         return placeService.deletePlace(placeDto.getPlace_id());

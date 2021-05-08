@@ -1,17 +1,12 @@
 package com.diplom.bookingsystem.service.Place.Impl;
 
-import com.diplom.bookingsystem.dto.Place.GalleryDto;
 import com.diplom.bookingsystem.dto.Place.PlaceDto;
+import com.diplom.bookingsystem.dto.Place.ScheduleDto;
 import com.diplom.bookingsystem.exceptions.PlaceNotFoundException;
-import com.diplom.bookingsystem.model.Place.EService;
-import com.diplom.bookingsystem.model.Place.Gallery;
-import com.diplom.bookingsystem.model.Place.Place;
+import com.diplom.bookingsystem.model.Place.*;
 import com.diplom.bookingsystem.model.Address;
 import com.diplom.bookingsystem.model.User.User;
-import com.diplom.bookingsystem.repository.GalleryRepository;
-import com.diplom.bookingsystem.repository.PlaceRepository;
-import com.diplom.bookingsystem.repository.ServiceRepository;
-import com.diplom.bookingsystem.repository.UserRepository;
+import com.diplom.bookingsystem.repository.*;
 import com.diplom.bookingsystem.service.Place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import com.diplom.bookingsystem.model.Place.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class PlaceServiceImpl implements PlaceService {
@@ -35,6 +30,12 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Autowired
     GalleryRepository galleryRepository;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
+
+    @Autowired
+    DayRepository dayRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -60,6 +61,7 @@ public class PlaceServiceImpl implements PlaceService {
         placeDto.getPathsToPhotos().forEach(path ->
             gallery.add(new Gallery(place, path)));
         place.setGallery(gallery);
+        place.setSchedule(makeSchedules(placeDto, place));
 
         return new ResponseEntity<>(placeRepository.save(place), HttpStatus.CREATED);
     }
@@ -80,11 +82,13 @@ public class PlaceServiceImpl implements PlaceService {
         Place placeNew = placeRepository.save(makePlace(placeDto));
 
         galleryRepository.deleteByPlace(placeNew);
+        scheduleRepository.deleteByPlace(placeNew);
 
         Set<Gallery> gallery = new HashSet<>();
         placeDto.getPathsToPhotos().forEach(path ->
                 gallery.add(new Gallery(placeNew, path)));
         placeNew.setGallery(gallery);
+        placeNew.setSchedule(makeSchedules(placeDto, placeNew));
 
         return new ResponseEntity<>(placeRepository.save(placeNew), HttpStatus.OK);
     }
@@ -112,6 +116,60 @@ public class PlaceServiceImpl implements PlaceService {
         else
             place.setUser(user);
 
+        place.setServices(makeServices(placeDto));
+
+        return place;
+    }
+
+    private Set<Schedule> makeSchedules (PlaceDto placeDto, Place place) {
+        Set<ScheduleDto> schedulesDto = placeDto.getSchedules();
+
+        return schedulesDto
+                .stream()
+                .map(scheduleDto -> {
+                    Schedule schedule = new Schedule(
+                            scheduleDto.getStart(),
+                            scheduleDto.getStop(),
+                            scheduleDto.getPrice(),
+                            place);
+                    String strDay = scheduleDto.getDay();
+                    switch (strDay) {
+                        case "monday":
+                            schedule.setDay(dayRepository.findByDay(EDay.MONDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "tuesday":
+                            schedule.setDay(dayRepository.findByDay(EDay.TUESDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "wednesday":
+                            schedule.setDay(dayRepository.findByDay(EDay.WEDNESDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "thursday":
+                            schedule.setDay(dayRepository.findByDay(EDay.THURSDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "friday":
+                            schedule.setDay(dayRepository.findByDay(EDay.FRIDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "saturday":
+                            schedule.setDay(dayRepository.findByDay(EDay.SATURDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        case "sunday":
+                            schedule.setDay(dayRepository.findByDay(EDay.SUNDAY)
+                                    .orElseThrow(() -> new RuntimeException("Day is not found.")));
+                            break;
+                        default:
+                            throw new RuntimeException("Day is not found.");
+                    }
+                    return schedule;
+                }).collect(Collectors.toSet());
+    }
+
+    private Set<Service> makeServices (PlaceDto placeDto) {
         Set<String> strServices = placeDto.getService();
         Set<Service> services = new HashSet<>();
 
@@ -177,8 +235,6 @@ public class PlaceServiceImpl implements PlaceService {
             }
         });
 
-        place.setServices(services);
-
-        return place;
+        return services;
     }
 }

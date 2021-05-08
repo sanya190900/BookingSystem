@@ -1,6 +1,7 @@
 package com.diplom.bookingsystem.dto.Place;
 
 import com.diplom.bookingsystem.model.Address;
+import com.diplom.bookingsystem.model.Place.Schedule;
 import com.diplom.bookingsystem.model.Place.Service;
 import com.diplom.bookingsystem.model.User.User;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class PlaceDto {
     private Set<String> service;
 
     private Set<String> pathsToPhotos;
+
+    private Set<ScheduleDto> schedules;
 
     private User user;
 }

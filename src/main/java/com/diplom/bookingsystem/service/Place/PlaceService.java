@@ -12,5 +12,4 @@ public interface PlaceService {
     ResponseEntity<?> updatePlace(PlaceDto placeDto);
 
     ResponseEntity<?> deletePlace(Long id);
-
 }

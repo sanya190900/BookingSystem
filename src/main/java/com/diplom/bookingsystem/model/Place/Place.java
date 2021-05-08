@@ -48,6 +48,9 @@ public class Place {
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private Set<Gallery> gallery;
 
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private Set<Schedule> schedule;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "places_services",
             joinColumns = @JoinColumn(name = "place_id"),

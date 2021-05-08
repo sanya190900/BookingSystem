@@ -38,7 +38,5 @@ public class Comment {
         this.user = user;
     }
 
-    // TODO: WORKING TIME!!!
-
     // TODO: front end
 }
