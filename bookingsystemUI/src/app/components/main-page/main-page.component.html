@@ -1,0 +1,10 @@
+<div class="text-center mx-auto">
+  <h2>Main Page</h2>
+  <div *ngIf="!loggedIn">
+    <button class="btn btn-nc" routerLink="/login">Login</button>
+    <button class="btn btn-nc" routerLink="/register">Sign Up</button>
+  </div>
+  <div *ngIf="loggedIn">
+    <button class="btn btn-nc" (click)="onLogout()" routerLink="/">Logout</button>
+  </div>
+</div>

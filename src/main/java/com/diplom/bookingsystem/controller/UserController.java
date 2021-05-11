@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -30,6 +31,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDto userDto) {
+        System.out.println(userDto);
         return userService.saveUser(userDto);
     }
 
