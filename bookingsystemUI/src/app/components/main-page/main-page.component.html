@@ -1,10 +1,52 @@
-<div class="text-center mx-auto">
-  <h2>Main Page</h2>
-  <div *ngIf="!loggedIn">
-    <button class="btn btn-nc" routerLink="/login">Login</button>
-    <button class="btn btn-nc" routerLink="/register">Sign Up</button>
-  </div>
-  <div *ngIf="loggedIn">
-    <button class="btn btn-nc" (click)="onLogout()" routerLink="/">Logout</button>
-  </div>
-</div>
+<!--<div id="dataIO">-->
+<!--  <div class="w3-container w3-dark-gray w3-center"><h3>Inputs</h3></div>-->
+<!--  <div class="w3-container" style="padding: 10px" >-->
+<!--    <h3 *ngFor="let input of getKeys(parameters)">-->
+<!--      <ng-container *ngIf="!isCalculated; then inputs; else blocks"></ng-container>-->
+<!--      <ng-template #inputs>-->
+<!--        <button class="w3-btn w3-ripple w3-block" [ngClass]="parameters.get(input)?'w3-green':'w3-red'" (click)="changeState(input)">{{input}}</button>-->
+<!--      </ng-template>-->
+<!--      <ng-template #blocks>-->
+<!--        <div class="w3-container w3-center w3-padding" [ngClass]="parameters.get(input)?'w3-green':'w3-red'">-->
+<!--          {{input}}-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </h3>-->
+<!--  </div>-->
+
+<!--  <div class="w3-container w3-dark-gray w3-center"><h3>Output</h3></div>-->
+<!--  <div class="w3-container" style="min-height: 30px">-->
+<!--    <h3 *ngIf="result != null">-->
+<!--      <div class="w3-container w3-center w3-padding" [ngClass]="result?'w3-green':'w3-red'">-->
+<!--        Y-->
+<!--      </div>-->
+<!--    </h3>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div id="content">-->
+<!--  <h1 class="w3-border w3-card-4 w3-round-xlarge contentHeader">Calculator</h1>-->
+<!--  <br>-->
+<!--  <label class="w3-text-blue">Formula</label>-->
+<!--  <ng-container *ngIf="!isCalculated; then inputFormula; else textFormula"></ng-container>-->
+<!--  <ng-template #inputFormula>-->
+<!--    <h4>-->
+<!--      <input class="w3-input w3-border" type="text" name="formula" placeholder="A & B" (input)="setInputs($event)" [value]="formula" >-->
+<!--    </h4>-->
+<!--  </ng-template>-->
+<!--  <ng-template #textFormula>-->
+<!--    <h2>{{formula}}</h2>-->
+<!--  </ng-template>-->
+<!--  <br>-->
+
+<!--  <ng-container *ngIf="!isCalculated; then calculateBtn; else enterAnotherFormulaBtn"></ng-container>-->
+<!--  <ng-template #calculateBtn>-->
+<!--    <button class="w3-btn w3-blue" (click)="calculate()">Calculate</button>-->
+<!--  </ng-template>-->
+<!--  <ng-template #enterAnotherFormulaBtn>-->
+<!--    <button class="w3-btn w3-blue" (click)="back()">Enter another formula</button>-->
+<!--    <button class="w3-btn w3-blue w3-margin-left" (click)="generateTruthTable()">Generate truth table</button>-->
+<!--    <table class="w3-table-all w3-card-4" [hidden]="isGenerated">-->
+
+<!--    </table>-->
+<!--  </ng-template>-->
+<!--</div>-->

@@ -6,14 +6,16 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class BasicAuthHttpInterceptorService implements HttpInterceptor {
-
+  token: string = ""
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (sessionStorage.getItem('username') && sessionStorage.getItem('token')) {
+    this.token = <string> sessionStorage.getItem('token');
+
+    if (sessionStorage.getItem('username') && this.token) {
       req = req.clone({
         setHeaders: {
-          Authorization: <string> sessionStorage.getItem('token')
+          Authorization: this.token
         }
       })
     }

@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://www.w3schools.com/w3css/4/w3.css");
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #f4f4f4;
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  color: inherit;
+}
+
+#content {
+  margin-left: 360px;
+  background-color: white;
+  height: 90%;
+  padding: 10px 30px 10px 30px;
+}
+
+.contentHeader {
+  text-align: center;
+  width: 300px;
+  margin: auto;
+  background-color: #3c8dbc;
+  color: white;
+}
+
+#dataIO {
+  float: left;
+  width: 350px;
+  background-color: white;
+  height: 90%;
+}

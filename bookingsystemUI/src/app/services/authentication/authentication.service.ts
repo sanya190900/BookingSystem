@@ -35,6 +35,16 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.httpClient.get(apiPath + 'user/revoke')
+      .pipe(
+        map(
+          value => {return value}
+        )
+      ).subscribe(
+        value => {},
+        error => console.log(error)
+    );
+
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
   }

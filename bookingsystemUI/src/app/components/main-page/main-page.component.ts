@@ -7,17 +7,10 @@ import {AuthenticationService} from '../../services/authentication/authenticatio
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  loggedIn: boolean;
 
-  constructor(private authenticationService: AuthenticationService) {
-    this.loggedIn = authenticationService.isUserLoggedIn();
-  }
+  constructor() {}
 
   ngOnInit(): void {
-  }
-
-  onLogout() {
-    this.authenticationService.logout();
   }
 
 }
