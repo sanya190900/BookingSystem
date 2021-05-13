@@ -1,174 +1,172 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="form">
-    <h2 class="header" style="font-size: 30px"><b>Registration</b></h2>
-    <table width="100%">
-      <tr>
-        <td width="48%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>First name</b><span>*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                  <div *ngIf="f.firstName.errors.required"><span>Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-        </td>
-        <td style="padding-left: 4%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Last name</b><span style="color: red;">*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                  <div *ngIf="f.lastName.errors.required"><span style="color: red;">Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" /><br />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>E-Mail</b><span style="color: red;">*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                  <div *ngIf="f.email.errors.required"><span style="color: red;">Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" /><br />
-        </td>
-        <td style="padding-left: 4%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Phone</b></label></td>
-              <td>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" /><br />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Username</b><span style="color: red;">*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                  <div *ngIf="f.username.errors.required"><span style="color: red;">Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" /><br />
-        </td>
-        <td style="padding-left: 4%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Password</b><span style="color: red;">*</span></label></td>
-              <td><div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required"><span style="color: red;">Required</span></div>
-                <div *ngIf="f.password.errors.minlength"><span style="color: red;">6+ characters</span></div>
-              </div></td>
-            </tr>
-          </table>
-          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" /><br />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Path to avatar</b></label></td>
-              <td>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="pathToAvatar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pathToAvatar.errors }" /><br />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <br>
-          <input style="width: 30px" type="checkbox" formControlName="role" id="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }" />
-          <label class="w3-text-blue"><b>Manager</b></label>
-        </td>
-      </tr>
-    </table>
-    <h3 class="header">Address information</h3>
-    <table width="100%">
-      <tr>
-        <td width="48%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Country</b><span style="color: red;">*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                  <div *ngIf="f.country.errors.required"><span>Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" /><br />
-        </td>
-        <td style="padding-left: 4%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>City</b><span>*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                  <div *ngIf="f.city.errors.required"><span>Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" /><br />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>Street</b><span>*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
-                  <div *ngIf="f.street.errors.required"><span>Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.street.errors }" /><br />
-        </td>
-        <td style="padding-left: 4%">
-          <table>
-            <tr>
-              <td><label class="w3-text-blue"><b>House</b><span>*</span></label></td>
-              <td>
-                <div *ngIf="submitted && f.house_number.errors" class="invalid-feedback">
-                  <div *ngIf="f.house_number.errors.required"><span>Required</span></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <input type="text" formControlName="house_number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.house_number.errors }" /><br />
-        </td>
-      </tr>
-    </table>
-    <br>
-    <div>
-      <button [disabled]="loading" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="width: 48%">
-        Sign up
-      </button>
-      <button routerLink="/login" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="margin-left: 4%; width: 48%">
-        Back to login
-      </button>
-    </div>
+  <h2 class="header" style="font-size: 30px"><b>Registration</b></h2>
+  <table width="100%">
+    <tr>
+      <td width="48%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>First name</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Last name</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>E-Mail</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Phone</b></label></td>
+            <td>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Username</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Password</b><span>*</span></label></td>
+            <td><div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required"><span>Required</span></div>
+              <div *ngIf="f.password.errors.minlength"><span>6+ characters</span></div>
+            </div></td>
+          </tr>
+        </table>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Path to avatar</b></label></td>
+            <td>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="pathToAvatar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pathToAvatar.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <input style="width: 30px" type="checkbox" formControlName="role" id="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }" />
+        <label class="w3-text-blue"><b>Manager</b></label>
+      </td>
+    </tr>
+  </table>
+  <h3 class="header">Address information</h3>
+  <table width="100%">
+    <tr>
+      <td width="48%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Country</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                <div *ngIf="f.country.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>City</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                <div *ngIf="f.city.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Street</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                <div *ngIf="f.street.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.street.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>House</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.house_number.errors" class="invalid-feedback">
+                <div *ngIf="f.house_number.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="house_number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.house_number.errors }" /><br />
+      </td>
+    </tr>
+  </table>
+  <br>
+  <div>
+    <button [disabled]="loading" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="width: 48%">
+      Sign up
+    </button>
+    <button routerLink="/login" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="margin-left: 4%; width: 48%">
+      Back to login
+    </button>
   </div>
 </form>
