@@ -1,22 +1,22 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div style="width:600px; position:fixed; top: 10%; left: 50%; margin-left: -300px;">
+  <div class="form">
     <h2 class="header" style="font-size: 30px"><b>Registration</b></h2>
-    <table>
+    <table width="100%">
       <tr>
-        <td>
+        <td width="48%">
           <table>
             <tr>
-              <td><label class="w3-text-blue"><b>First name</b><span style="color: red;">*</span></label></td>
+              <td><label class="w3-text-blue"><b>First name</b><span>*</span></label></td>
               <td>
                 <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                  <div *ngIf="f.firstName.errors.required"><span style="color: red;">Required</span></div>
+                  <div *ngIf="f.firstName.errors.required"><span>Required</span></div>
                 </div>
               </td>
             </tr>
           </table>
           <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
         </td>
-        <td style="padding-left: 156px">
+        <td style="padding-left: 4%">
           <table>
             <tr>
               <td><label class="w3-text-blue"><b>Last name</b><span style="color: red;">*</span></label></td>
@@ -44,7 +44,7 @@
           </table>
           <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" /><br />
         </td>
-        <td style="padding-left: 156px">
+        <td style="padding-left: 4%">
           <table>
             <tr>
               <td><label class="w3-text-blue"><b>Phone</b></label></td>
@@ -69,7 +69,7 @@
           </table>
           <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" /><br />
         </td>
-        <td style="padding-left: 156px">
+        <td style="padding-left: 4%">
           <table>
             <tr>
               <td><label class="w3-text-blue"><b>Password</b><span style="color: red;">*</span></label></td>
@@ -91,7 +91,7 @@
               </td>
             </tr>
           </table>
-          <input style="width: 596px" type="text" formControlName="pathToAvatar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pathToAvatar.errors }" /><br />
+          <input type="text" formControlName="pathToAvatar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pathToAvatar.errors }" /><br />
         </td>
       </tr>
       <tr>
@@ -103,28 +103,28 @@
       </tr>
     </table>
     <h3 class="header">Address information</h3>
-    <table>
+    <table width="100%">
       <tr>
-        <td>
+        <td width="48%">
           <table>
             <tr>
               <td><label class="w3-text-blue"><b>Country</b><span style="color: red;">*</span></label></td>
               <td>
                 <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                  <div *ngIf="f.country.errors.required"><span style="color: red;">Required</span></div>
+                  <div *ngIf="f.country.errors.required"><span>Required</span></div>
                 </div>
               </td>
             </tr>
           </table>
           <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" /><br />
         </td>
-        <td style="padding-left: 156px">
+        <td style="padding-left: 4%">
           <table>
             <tr>
-              <td><label class="w3-text-blue"><b>City</b><span style="color: red;">*</span></label></td>
+              <td><label class="w3-text-blue"><b>City</b><span>*</span></label></td>
               <td>
                 <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                  <div *ngIf="f.city.errors.required"><span style="color: red;">Required</span></div>
+                  <div *ngIf="f.city.errors.required"><span>Required</span></div>
                 </div>
               </td>
             </tr>
@@ -136,23 +136,23 @@
         <td>
           <table>
             <tr>
-              <td><label class="w3-text-blue"><b>Street</b><span style="color: red;">*</span></label></td>
+              <td><label class="w3-text-blue"><b>Street</b><span>*</span></label></td>
               <td>
                 <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
-                  <div *ngIf="f.street.errors.required"><span style="color: red;">Required</span></div>
+                  <div *ngIf="f.street.errors.required"><span>Required</span></div>
                 </div>
               </td>
             </tr>
           </table>
           <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.street.errors }" /><br />
         </td>
-        <td style="padding-left: 156px">
+        <td style="padding-left: 4%">
           <table>
             <tr>
-              <td><label class="w3-text-blue"><b>House</b><span style="color: red;">*</span></label></td>
+              <td><label class="w3-text-blue"><b>House</b><span>*</span></label></td>
               <td>
                 <div *ngIf="submitted && f.house_number.errors" class="invalid-feedback">
-                  <div *ngIf="f.house_number.errors.required"><span style="color: red;">Required</span></div>
+                  <div *ngIf="f.house_number.errors.required"><span>Required</span></div>
                 </div>
               </td>
             </tr>
@@ -163,11 +163,11 @@
     </table>
     <br>
     <div>
-      <button routerLink="/login" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="width: 45%">
-        Back to login
-      </button>
-      <button [disabled]="loading" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="margin-left: 10%; width: 45%">
+      <button [disabled]="loading" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="width: 48%">
         Sign up
+      </button>
+      <button routerLink="/login" class="w3-bar-item w3-left w3-button w3-blue w3-large w3-block" style="margin-left: 4%; width: 48%">
+        Back to login
       </button>
     </div>
   </div>

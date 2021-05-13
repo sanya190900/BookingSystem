@@ -10,25 +10,24 @@
       </button>
     </div>
     <div *ngIf="loggedIn">
-    <button mat-raised-button style="margin-right: 10px" (click)="onLogout()">
-      <span>Log out</span>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>account_circle</mat-icon>
-    </button>
+      <button mat-raised-button style="margin-right: 10px" (click)="onLogout()">
+        <span>Log out</span>
+      </button>
+      <div class="dropdown" style="float: right">
+        <button class="dropbtn">
+          <mat-icon style="font-size: 35px; vertical-align: middle">account_circle</mat-icon>
+        </button>
+        <div class="dropdown-content">
+          <a routerLink="/profile">
+            <mat-icon>home</mat-icon>
+            <label> Profile</label>
+          </a>
+          <a routerLink="/history">
+            <mat-icon>history</mat-icon>
+            <label> History</label>
+          </a>
+        </div>
+      </div>
     </div>
-<!--    <button mat-icon-button [matMenuTriggerFor]="menu">-->
-<!--      <mat-icon>account_circle</mat-icon>-->
-<!--    </button>-->
-<!--    <mat-menu #menu="matMenu">-->
-<!--      <button mat-menu-item>-->
-<!--        <mat-icon>home</mat-icon>-->
-<!--        Profile-->
-<!--      </button>-->
-<!--      <button mat-menu-item>-->
-<!--        <mat-icon>history</mat-icon>-->
-<!--        History-->
-<!--      </button>-->
-<!--    </mat-menu>-->
   </div>
 </div>
