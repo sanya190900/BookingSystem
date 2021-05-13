@@ -17,6 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {BasicAuthHttpInterceptorService} from './services/authentication/basic-auth-http-interceptor.service';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {BasicAuthHttpInterceptorService} from './services/authentication/basic-a
     RegistrationPageComponent,
     MainPageComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ProfilePageComponent
   ],
   imports: [
     MatMenuModule,

@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationPageComponent
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent
   }
 ];
 

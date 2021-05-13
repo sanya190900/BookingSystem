@@ -1,0 +1,168 @@
+<div>
+  <h1 class="otstuph w3-border w3-card-4 w3-round-xlarge" style="width:95%; margin: auto;" align="center">Profile</h1><br /><br />
+
+  <div class="w3-row" [formGroup]="form">
+
+    <div class="w3-half w3-container w3-center">
+      <br />
+      <br />
+      <img src="{{user.pathToAvatar}}" (error)="img.src = 'assets/images/Default-user.png'" #img class="profile-pic-full" alt="">
+      <br />
+      <br />
+      <a [class]="imageEditing ? 'd-none' : 'd-inline-block color-nc'" (click)="imageEdit()">Change photo</a>
+      <div [class]="!imageEditing ? 'd-none' : 'd-inline-block down'">
+        <input type="text" class="form-control" formControlName="image" [(ngModel)]="user.pathToAvatar"><br />
+        <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top w3-left" (click)="updateProfile()">Save</a>
+        <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="imageEdit()">Cancel</a>
+      </div>
+    </div>
+
+
+    <div class="w3-half w3-container">
+      <h2 align="center"><b>User information</b></h2><br />
+      <div [class]="usernameEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="usernameEditing ? 'd-none' : 'd-inline-block'">{{user.username}} ({{user?.role?.length == 2 ? "MANAGER" : "CUSTOMER"}})</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="usernameEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!usernameEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="username" [ngModel]="user.username"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="usernameEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <div [class]="nameEditing ? 'd-none' : 'd-inline-block'" style="width: 220px">
+        <h3 [class]="nameEditing ? 'd-none' : 'd-inline-block'">{{user.name}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="nameEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!nameEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="name" [ngModel]="user.name"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="nameEdit()">Cancel</a>
+        </div>
+      </div>
+
+      <div [class]="surnameEditing ? 'd-none' : 'd-inline-block'" style="width: 220px">
+        <h3 [class]="surnameEditing ? 'd-none' : 'd-inline-block'">{{user.surname}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="surnameEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!surnameEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="surname" [ngModel]="user.surname"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="surnameEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3 class="d-inline-block" style="margin-right: 10px">Email:</h3>
+      <div [class]="emailEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="emailEditing ? 'd-none' : 'd-inline-block'">{{user.email}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="emailEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!emailEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="email" [ngModel]="user.email"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="emailEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3 class="d-inline-block" style="margin-right: 10px">Phone:</h3>
+      <div [class]="phoneEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="phoneEditing ? 'd-none' : 'd-inline-block'">{{user.phone}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="phoneEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!phoneEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="phone" [ngModel]="user.phone"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="phoneEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3><span class="text-secondary text-shadow-gray mr-2">Registered: </span><span class="text-shadow-gray">{{user.creation_date_time | date: "dd-MM-yyyy"}}</span></h3>
+
+      <br />
+      <h2 align="center"><b>Address information</b></h2><br />
+      <h3 class="d-inline-block" style="margin-right: 10px">Country:</h3>
+      <div [class]="countryEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="countryEditing ? 'd-none' : 'd-inline-block'">{{user?.address?.country}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="countryEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!countryEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="country" [ngModel]="user?.address?.country"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="countryEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3 class="d-inline-block" style="margin-right: 10px">City:</h3>
+      <div [class]="cityEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="cityEditing ? 'd-none' : 'd-inline-block'">{{user?.address?.city}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="cityEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!cityEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="city" [ngModel]="user?.address?.city"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="cityEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3 class="d-inline-block" style="margin-right: 10px">Street:</h3>
+      <div [class]="streetEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="streetEditing ? 'd-none' : 'd-inline-block'">{{user?.address?.street}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="streetEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!streetEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="street" [ngModel]="user?.address?.street"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="streetEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+
+      <h3 class="d-inline-block" style="margin-right: 10px">House:</h3>
+      <div [class]="house_numberEditing ? 'd-none' : 'd-inline-block'">
+        <h3 [class]="house_numberEditing ? 'd-none' : 'd-inline-block'">{{user?.address?.house_number}}</h3>
+        <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="house_numberEdit()">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <div [class]="!house_numberEditing ? 'd-none' : 'd-inline-block down'">
+        <div style="margin-right: 20px">
+          <input type="text" class="form-control" formControlName="house_number" [ngModel]="user?.address?.house_number"><br />
+          <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top" (click)="updateProfile()">Save</a>
+          <a class="w3-button w3-white w3-border w3-border-red w3-round-large w3-margin-top w3-right" (click)="house_numberEdit()">Cancel</a>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>

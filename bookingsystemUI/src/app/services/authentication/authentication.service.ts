@@ -23,6 +23,8 @@ export class AuthenticationService {
           sessionStorage.setItem('username', <string> userAuth.username);
           let tokenStr = 'Bearer ' + userData.token;
           sessionStorage.setItem('token', tokenStr);
+          sessionStorage.setItem('roles', JSON.stringify(userData.roles));
+          sessionStorage.setItem('id', userData.userId + "");
           return userData;
         }
       )
@@ -47,5 +49,7 @@ export class AuthenticationService {
 
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('roles');
+    sessionStorage.removeItem('id');
   }
 }

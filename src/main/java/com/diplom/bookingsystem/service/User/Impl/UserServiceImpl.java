@@ -85,9 +85,13 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>("Username is already taken: " + userDto.getUsername(), HttpStatus.BAD_REQUEST);
         }
 
-        if(!userDto.getUsername().equals(user.getUsername()) ||
-                !passwordEncoder.matches(userDto.getPassword(), user.getPassword()))
+
+        if(!userDto.getUsername().equals(user.getUsername()))
             unAuthUser(request);
+
+        if(userDto.getPassword() != null)
+            if(!passwordEncoder.matches(userDto.getPassword(), user.getPassword()))
+                unAuthUser(request);
 
         Address address = userDto.getAddress();
         address.setAddress_id(user.getAddress().getAddress_id());
@@ -238,7 +242,7 @@ public class UserServiceImpl implements UserService {
 
     private User makeUser(UserDto userDto, LocalDateTime creationDateTime) {
         User user = new User(userDto.getUsername(),
-                passwordEncoder.encode(userDto.getPassword()),
+                userDto.getPassword() != null ? passwordEncoder.encode(userDto.getPassword()) : getAuthenticatedUser().getPassword(),
                 userDto.getEmail(),
                 userDto.getName(),
                 userDto.getSurname(),
