@@ -14,4 +14,13 @@ export class UserService {
   register(user : UserModel) : Observable<UserModel> {
     return this.httpClient.post<UserModel>(apiPath + 'user/', user);
   }
+
+  getUser() : Observable<UserModel>{
+    return this.httpClient.get<UserModel>(apiPath + 'user/');
+  }
+
+  updateUser(user : UserModel) : Observable<UserModel>{
+    console.log(user);
+    return this.httpClient.put<UserModel>(apiPath + 'user/', user);
+  }
 }
