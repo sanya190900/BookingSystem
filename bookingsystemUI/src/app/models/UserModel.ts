@@ -12,4 +12,5 @@ export class UserModel {
   address?: AddressModel;
   creation_date_time?: Date;
   role?: string[];
+  roles?: string[];
 }

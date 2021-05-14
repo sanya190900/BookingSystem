@@ -20,6 +20,7 @@ export class BasicAuthHttpInterceptorService implements HttpInterceptor {
       })
     }
 
+    console.log(req);
     return next.handle(req);
   }
 }

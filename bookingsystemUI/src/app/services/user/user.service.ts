@@ -20,7 +20,6 @@ export class UserService {
   }
 
   updateUser(user : UserModel) : Observable<UserModel>{
-    console.log(user);
     return this.httpClient.put<UserModel>(apiPath + 'user/', user);
   }
 }

@@ -14,6 +14,7 @@ declare var $: any;
 })
 export class ProfilePageComponent implements OnInit {
   user: UserModel = new UserModel();
+  role: string = "";
   editing: boolean = false;
   nameEditing: boolean = false;
   surnameEditing: boolean = false;
@@ -49,6 +50,7 @@ export class ProfilePageComponent implements OnInit {
 
     userService.getUser().subscribe(value => {
       this.user = value;
+      this.role = this.user.roles != null ? (this.user.roles.length > 1 ? "MANAGER" : "CUSTOMER") : "";
       console.log(this.user);
     });
   }

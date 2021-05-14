@@ -21,7 +21,7 @@
     <div class="w3-half w3-container">
       <h2 align="center"><b>User information</b></h2><br />
       <div [class]="usernameEditing ? 'd-none' : 'd-inline-block'">
-        <h3 [class]="usernameEditing ? 'd-none' : 'd-inline-block'">{{user.username}} ({{user?.role?.length == 2 ? "MANAGER" : "CUSTOMER"}})</h3>
+        <h3 [class]="usernameEditing ? 'd-none' : 'd-inline-block'">{{user.username}} ({{role}})</h3>
         <button *ngIf="!editing" class="w3-button w3-large rounded" (click)="usernameEdit()">
           <i class="fa fa-pencil"></i>
         </button>

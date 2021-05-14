@@ -52,6 +52,7 @@ public class UserController {
 
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
+        System.out.println(request);
         return refreshTokenService.refreshAccessToken(request);
     }
 

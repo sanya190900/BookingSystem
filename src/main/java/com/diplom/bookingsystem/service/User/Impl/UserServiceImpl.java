@@ -236,6 +236,7 @@ public class UserServiceImpl implements UserService {
 
     private User getAuthenticatedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
         return userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + auth.getName()));
     }
@@ -258,11 +259,7 @@ public class UserServiceImpl implements UserService {
         Set<String> strRoles = userDto.getRole();
         Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByRole(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Role is not found."));
-            roles.add(userRole);
-        } else {
+        if (strRoles != null) {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
@@ -283,9 +280,8 @@ public class UserServiceImpl implements UserService {
                         roles.add(userRole);
                 }
             });
-        }
-
-        user.setRoles(roles);
+            user.setRoles(roles);
+        } else user.setRoles(getAuthenticatedUser().getRoles());
 
         return user;
     }
