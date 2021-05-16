@@ -20,7 +20,6 @@ import {BasicAuthHttpInterceptorService} from './services/authentication/basic-a
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { PlacePageComponent } from './components/place-page/place-page.component';
 import { AddPlaceFormComponent } from './components/add-place-form/add-place-form.component';
-import {SlideshowModule} from 'ng-simple-slideshow';
 
 @NgModule({
   declarations: [
@@ -45,8 +44,7 @@ import {SlideshowModule} from 'ng-simple-slideshow';
         HttpClientModule,
         MatCheckboxModule,
         MatNativeDateModule,
-        MatButtonModule,
-        SlideshowModule,
+        MatButtonModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }
