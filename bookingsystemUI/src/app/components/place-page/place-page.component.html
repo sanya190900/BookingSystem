@@ -1,0 +1,87 @@
+<div>
+  <h1 class="otstuph w3-border w3-card-4 w3-round-xlarge" style="width:95%; margin: auto;"
+      align="center">{{place.name}}</h1><br /><br />
+
+  <div class="w3-row">
+    <table style="width: 100%">
+      <tr>
+        <td *ngFor="let url of photoUrls">
+          <img [src]="url" height="120px">
+        </td>
+      </tr>
+    </table>
+    <br />
+  </div>
+
+  <div class="w3-row">
+  </div>
+  <div class="w3-half w3-container">
+    <h2><b>Address information</b></h2><br />
+    <h3 class="d-inline-block" style="margin-right: 10px">Country:</h3>
+    <h3 class="d-inline-block">{{place.address?.country}}</h3>
+    <br />
+
+    <h3 class="d-inline-block" style="margin-right: 10px">City:</h3>
+    <h3 class="d-inline-block">{{place.address?.city}}</h3>
+    <br />
+
+    <h3 class="d-inline-block" style="margin-right: 10px">Street:</h3>
+    <h3 class="d-inline-block">{{place.address?.street}}</h3>
+    <br />
+
+    <h3 class="d-inline-block" style="margin-right: 10px">House number:</h3>
+    <h3 class="d-inline-block">{{place.address?.house_number}}</h3>
+  </div>
+
+  <div class="w3-half w3-container">
+    <h2 ><b>About creator</b></h2><br />
+    <h3>{{place.user?.name}} {{place.user?.surname}}</h3>
+    <br />
+    <h3><b>Contacts :</b></h3>
+    <h3>{{place.user?.email}}<br>{{place.user?.phone}}</h3>
+    <br />
+  </div>
+
+  <div class="w3-row">
+    <h3 align="center"><b>Description</b></h3>
+    <div class="w3-container description">
+      {{place.description}}
+    </div>
+  </div>
+
+  <div class="w3-row">
+    <div class="w3-container">
+      <br />
+      <h3 class="d-inline-block"><b>Services: </b></h3>
+      <span style="margin-left: 10px" class="d-inline-block" *ngFor="let service of place.services">
+        {{service.service.split("_")[1]}}
+      </span>
+    </div>
+  </div>
+
+  <div class="w3-row">
+    <div class="w3-container">
+      <h3 class="d-inline-block"><b>Schedule: </b></h3>
+      <p *ngFor="let schedule of schedule">
+        <b>{{schedule.day?.day}}</b> : From {{schedule.start}} to {{schedule.stop}} with price {{schedule.price}}$  per hour.
+      </p>
+    </div>
+  </div>
+
+  <div class="w3-row">
+    <div class="w3-container">
+      <h3 align="center"><b>Comments</b></h3>
+      <div *ngFor="let comment of place.comments">
+        <p style="font-size: 12px"><b>Author : {{comment.user?.name}} {{comment.user?.surname}}</b></p>
+        <p style="margin-left: 20px">{{comment.comment}}</p>
+        <br />
+      </div>
+    </div>
+
+    <div *ngIf="isLoggedIn()" [formGroup]="form">
+      <textarea rows="5" style="width: 100%; resize: none" formControlName="comment"></textarea>
+      <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top w3-right" (click)="sendComment()">Send</a>
+    </div>
+
+  </div>
+</div>

@@ -29,7 +29,6 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    @JsonIgnore
     private User user;
 
     public Comment(String comment, Place place, User user) {

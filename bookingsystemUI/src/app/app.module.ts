@@ -18,6 +18,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {BasicAuthHttpInterceptorService} from './services/authentication/basic-auth-http-interceptor.service';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { PlacePageComponent } from './components/place-page/place-page.component';
+import { AddPlaceFormComponent } from './components/add-place-form/add-place-form.component';
+import {SlideshowModule} from 'ng-simple-slideshow';
 
 @NgModule({
   declarations: [
@@ -27,21 +30,24 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
     MainPageComponent,
     HeaderComponent,
     FooterComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    PlacePageComponent,
+    AddPlaceFormComponent
   ],
-  imports: [
-    MatMenuModule,
-    MatIconModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatCheckboxModule,
-    MatNativeDateModule,
-    MatButtonModule,
-  ],
+    imports: [
+        MatMenuModule,
+        MatIconModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatCheckboxModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        SlideshowModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }
   ],

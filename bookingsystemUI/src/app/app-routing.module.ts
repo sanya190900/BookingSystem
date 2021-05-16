@@ -4,6 +4,8 @@ import {LoginPageComponent} from './components/login-page/login-page.component';
 import {RegistrationPageComponent} from './components/registration-page/registration-page.component';
 import {MainPageComponent} from './components/main-page/main-page.component';
 import {ProfilePageComponent} from './components/profile-page/profile-page.component';
+import {PlacePageComponent} from './components/place-page/place-page.component';
+import {AddPlaceFormComponent} from './components/add-place-form/add-place-form.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,24 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePageComponent
+  },
+  {
+    path: 'place',
+    children: [
+      {
+        path: '',
+        redirectTo: '/',
+        pathMatch: 'full'
+      },
+      {
+        path: 'new',
+        component: AddPlaceFormComponent
+      },
+      {
+        path: ':id',
+        component: PlacePageComponent
+      }
+    ]
   }
 ];
 

@@ -1,7 +1,7 @@
 <div id="header">
   <div class="logo"><a mat-button routerLink="/"><b>Booking System</b></a></div>
   <div class="userActions">
-    <div *ngIf="!isLogedIn()">
+    <div *ngIf="!isLoggedIn()">
       <button mat-raised-button style="margin-right: 10px" routerLink="/register">
         <span>Sign up</span>
       </button>
@@ -9,7 +9,7 @@
         <span>Sign in</span>
       </button>
     </div>
-    <div *ngIf="isLogedIn()">
+    <div *ngIf="isLoggedIn()">
       <button mat-raised-button style="margin-right: 10px" (click)="onLogout()">
         <span>Log out</span>
       </button>

@@ -72,6 +72,7 @@ public class User {
   private LocalDateTime creation_date_time;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @JsonIgnore
   private Set<Place> places;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

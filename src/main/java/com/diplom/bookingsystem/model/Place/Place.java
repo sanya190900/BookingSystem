@@ -32,7 +32,6 @@ public class Place {
     @NotBlank
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    @JsonIgnore
     private User user;
 
     @NotBlank

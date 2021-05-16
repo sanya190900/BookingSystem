@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/place/comment")
 public class CommentController {
@@ -22,6 +23,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> createComment(@Valid @RequestBody CommentDto commentDto) {
+        System.out.println(commentDto);
         return commentService.createComment(commentDto);
     }
 
