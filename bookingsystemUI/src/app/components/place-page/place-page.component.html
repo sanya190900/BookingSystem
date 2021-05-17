@@ -60,25 +60,58 @@
   </div>
 
   <div class="w3-row">
-    <div class="w3-container">
+    <div class="w3-container w3-half">
       <h3 class="d-inline-block"><b>Schedule: </b></h3>
       <p *ngFor="let schedule of schedule">
         <b>{{schedule.day?.day}}</b> : From {{schedule.start}} to {{schedule.stop}} with price {{schedule.price}}$  per hour.
       </p>
     </div>
+    <div class="w3-half w3-container w3-border" *ngIf="isLoggedIn()" [formGroup]="form2">
+      <h3 align="center"><b>Reservation</b></h3>
+      <div class="w3-row">
+        <div class="w3-half w3-container w3-center">
+          <h4><b>From</b></h4>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="pickerFrom" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+          <input style="width: 245px" type="text" formControlName="start" placeholder="Enter time" />
+        </div>
+        <div class="w3-half w3-container w3-center">
+          <h4><b>To</b></h4>
+          <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="pickerTo" formControlName="stopDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
+          <input style="width: 245px" type="text" formControlName="stop" placeholder="Enter time" />
+        </div>
+      </div>
+      <br />
+      <div class="w3-row w3-center">
+        <textarea rows="5" style="width: 100%; resize: none" formControlName="message"></textarea>
+        <a type="submit" style="width: 50%" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top w3-margin-bottom" (click)="makeReservation()">Send</a>
+      </div>
+    </div>
   </div>
 
-  <div class="w3-row">
+
+
+  <br />
+  <div class="w3-row" [formGroup]="form">
     <div class="w3-container">
       <h3 align="center"><b>Comments</b></h3>
       <div *ngFor="let comment of place.comments">
-        <p style="font-size: 12px"><b>Author : {{comment.user?.name}} {{comment.user?.surname}}</b></p>
-        <p style="margin-left: 20px">{{comment.comment}}</p>
+        <p style="font-size: 16px"><b>Author : {{comment.user?.name}} {{comment.user?.surname}}</b></p>
+        <p style="margin-left: 20px; font-size: 18px">{{comment.comment}}</p>
         <br />
       </div>
     </div>
 
-    <div *ngIf="isLoggedIn()" [formGroup]="form">
+    <div *ngIf="isLoggedIn()">
       <textarea rows="5" style="width: 100%; resize: none" formControlName="comment"></textarea>
       <a type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-margin-top w3-right" (click)="sendComment()">Send</a>
     </div>

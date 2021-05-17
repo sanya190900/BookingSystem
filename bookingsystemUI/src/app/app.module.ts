@@ -20,6 +20,11 @@ import {BasicAuthHttpInterceptorService} from './services/authentication/basic-a
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { PlacePageComponent } from './components/place-page/place-page.component';
 import { AddPlaceFormComponent } from './components/add-place-form/add-place-form.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { UsernameFormComponent } from './components/username-form/username-form.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -31,21 +36,26 @@ import { AddPlaceFormComponent } from './components/add-place-form/add-place-for
     FooterComponent,
     ProfilePageComponent,
     PlacePageComponent,
-    AddPlaceFormComponent
+    AddPlaceFormComponent,
+    UsernameFormComponent,
+    PasswordChangeComponent
   ],
-    imports: [
-        MatMenuModule,
-        MatIconModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatCheckboxModule,
-        MatNativeDateModule,
-        MatButtonModule
-    ],
+  imports: [
+    MatMenuModule,
+    MatIconModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatCheckboxModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }
   ],

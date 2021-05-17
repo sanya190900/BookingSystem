@@ -6,6 +6,8 @@ import {MainPageComponent} from './components/main-page/main-page.component';
 import {ProfilePageComponent} from './components/profile-page/profile-page.component';
 import {PlacePageComponent} from './components/place-page/place-page.component';
 import {AddPlaceFormComponent} from './components/add-place-form/add-place-form.component';
+import {UsernameFormComponent} from './components/username-form/username-form.component';
+import {PasswordChangeComponent} from './components/password-change/password-change.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,24 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePageComponent
+  },
+  {
+    path: 'password',
+    children: [
+      {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+      },
+      {
+        path: 'username',
+        component: UsernameFormComponent
+      },
+      {
+        path: 'change',
+        component: PasswordChangeComponent
+      }
+    ]
   },
   {
     path: 'place',
