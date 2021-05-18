@@ -20,6 +20,12 @@ export class HeaderComponent implements OnInit {
     return this.authenticationService.isUserLoggedIn();
   }
 
+  isManager() : boolean {
+    return JSON
+      .parse(sessionStorage.getItem('roles') || "[]")
+      .includes("ROLE_MANAGER");
+  }
+
   onLogout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
