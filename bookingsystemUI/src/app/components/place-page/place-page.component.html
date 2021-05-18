@@ -66,27 +66,29 @@
         <b>{{schedule.day?.day}}</b> : From {{schedule.start}} to {{schedule.stop}} with price {{schedule.price}}$  per hour.
       </p>
     </div>
+
+
     <div class="w3-half w3-container w3-border" *ngIf="isLoggedIn()" [formGroup]="form2">
       <h3 align="center"><b>Reservation</b></h3>
       <div class="w3-row">
-        <div class="w3-half w3-container w3-center">
+        <div class="w3-half w3-center resp">
           <h4><b>From</b></h4>
           <mat-form-field appearance="fill">
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="pickerFrom" formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
             <mat-datepicker #pickerFrom></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field><br />
           <input style="width: 245px" type="text" formControlName="start" placeholder="Enter time" />
         </div>
-        <div class="w3-half w3-container w3-center">
+        <div class="w3-half w3-center resp">
           <h4><b>To</b></h4>
           <mat-form-field appearance="fill">
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="pickerTo" formControlName="stopDate">
           <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
           <mat-datepicker #pickerTo></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field><br />
           <input style="width: 245px" type="text" formControlName="stop" placeholder="Enter time" />
         </div>
       </div>

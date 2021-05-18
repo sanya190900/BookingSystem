@@ -26,3 +26,9 @@
   font-size: 20px;
   text-align: justify;
 }
+
+@media screen and (max-width: 2000px) {
+  .resp {
+    width: 100%;
+  }
+}

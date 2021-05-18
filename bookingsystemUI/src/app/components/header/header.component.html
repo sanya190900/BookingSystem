@@ -13,21 +13,9 @@
       <button mat-raised-button style="margin-right: 10px" (click)="onLogout()">
         <span>Log out</span>
       </button>
-      <div class="dropdown" style="float: right">
-        <button class="dropbtn">
-          <mat-icon style="font-size: 35px; vertical-align: middle">account_circle</mat-icon>
-        </button>
-        <div class="dropdown-content">
-          <a routerLink="/profile">
-            <mat-icon>home</mat-icon>
-            <label> Profile</label>
-          </a>
-          <a routerLink="/history">
-            <mat-icon>history</mat-icon>
-            <label> History</label>
-          </a>
-        </div>
-      </div>
+      <button class="dropbtn" style="vertical-align: middle;">
+        <mat-icon style="font-size: 35px; vertical-align: middle; margin-top: -10px" routerLink="/profile">account_circle</mat-icon>
+      </button>
     </div>
   </div>
 </div>
