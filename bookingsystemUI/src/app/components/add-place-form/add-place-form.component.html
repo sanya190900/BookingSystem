@@ -1,1 +1,262 @@
-<p>add-place-form works!</p>
+<form [formGroup]="addPlaceForm" (ngSubmit)="onSubmit()">
+  <h2 class="header" style="font-size: 30px"><b>Add place</b></h2>
+  <table>
+    <tr>
+      <td><label class="w3-text-blue"><b>Name</b><span>*</span></label></td>
+      <td>
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required"><span>Required</span></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+
+  <table>
+    <tr>
+      <td><label class="w3-text-blue"><b>Description</b><span>*</span></label></td>
+      <td>
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+          <div *ngIf="f.description.errors.required"><span>Required</span></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <textarea rows="5" style="width: 100%; resize: none" formControlName="description"></textarea>
+
+  <br /><br />
+  <mat-form-field appearance="fill">
+    <mat-label>Services</mat-label>
+    <mat-select [formControl]="servicesControl" multiple>
+      <mat-select-trigger>
+        {{servicesControl.value ? servicesControl.value[0] : ''}}
+        <span *ngIf="servicesControl.value?.length > 1" class="example-additional-selection">
+        (+{{servicesControl.value.length - 1}} {{servicesControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let service of services" [value]="service">{{service}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h3 class="header">Photos</h3>
+  <table width="100%">
+    <tr>
+      <td>
+        <input type="text" formControlName="photo1" class="form-control" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" formControlName="photo2" class="form-control" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" formControlName="photo3" class="form-control" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" formControlName="photo4" class="form-control" />
+      </td>
+    </tr>
+  </table>
+
+  <br />
+  <h3 class="header">Schedule</h3>
+  <table width="100%">
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Monday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time1Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time1Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price1" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working1" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Tuesday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time2Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time2Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price2" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working2" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Wednesday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time3Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time3Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price3" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working3" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Thursday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time4Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time4Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price4" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working4" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Friday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time5Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time5Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price5" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working5" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Saturday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time6Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time6Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price6" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working6" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        <label class="w3-text-blue"><b>Sunday</b></label>
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time7Start" placeholder="Start working time" />
+      </td>
+      <td width="25%">
+        <input type="text" formControlName="time7Stop" placeholder="Stop working time" />
+      </td>
+      <td width="15%">
+        <input type="text" formControlName="price7" placeholder="Price / hour" />
+      </td>
+      <td width="25%">
+        <input style="width: 30px" type="checkbox" formControlName="working7" />
+        <label class="w3-text-blue"><b>Not working</b></label>
+      </td>
+    </tr>
+  </table>
+
+  <br />
+  <h3 class="header">Address information</h3>
+  <table width="100%">
+    <tr>
+      <td width="48%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Country</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                <div *ngIf="f.country.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>City</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                <div *ngIf="f.city.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" /><br />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>Street</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                <div *ngIf="f.street.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.street.errors }" /><br />
+      </td>
+      <td style="padding-left: 4%">
+        <table>
+          <tr>
+            <td><label class="w3-text-blue"><b>House</b><span>*</span></label></td>
+            <td>
+              <div *ngIf="submitted && f.house_number.errors" class="invalid-feedback">
+                <div *ngIf="f.house_number.errors.required"><span>Required</span></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <input type="text" formControlName="house_number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.house_number.errors }" /><br />
+      </td>
+    </tr>
+  </table>
+  <br>
+  <div>
+    <button [disabled]="loading" type="submit" class="w3-bar-item w3-button w3-blue w3-large" style="width: 50%; margin-left: 25%">
+      Create place
+    </button>
+  </div>
+</form>

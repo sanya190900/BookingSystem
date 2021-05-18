@@ -21,7 +21,7 @@ export class PlacePageComponent implements OnInit{
   placeId: number = 0;
   place: PlaceModel = new PlaceModel();
   schedule: ScheduleModel[] = [new ScheduleModel()];
-  photoUrls: string[] = [];
+  photoUrls?: string[];
   form: FormGroup = new FormGroup({
     comment: new FormControl(null)
   });
@@ -52,16 +52,19 @@ export class PlacePageComponent implements OnInit{
         place => {
           this.place = place
           console.log(this.place);
-          this.schedule = [
-            this.place.schedule.find( ({day}) => day?.day === "MONDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "TUESDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "WEDNESDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "THURSDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "FRIDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "SATURDAY") || new ScheduleModel(),
-            this.place.schedule.find( ({day}) => day?.day === "SUNDAY") || new ScheduleModel(),
+
+          let schedule = [
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "MONDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "TUESDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "WEDNESDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "THURSDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "FRIDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "SATURDAY")) || "",
+            JSON.stringify(this.place.schedule?.find( ({day}) => day?.day === "SUNDAY")) || ""
           ];
-          this.photoUrls = this.place.gallery.map(gal => {return gal.pathToPhoto || ""});
+
+          this.schedule = schedule.filter(value1 => value1 != "").map(value2 => JSON.parse(value2));
+          this.photoUrls = this.place.gallery?.map(gal => {return gal.pathToPhoto || ""});
         },
           error => console.log(error)
       );

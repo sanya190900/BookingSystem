@@ -14,4 +14,8 @@ export class PlaceService {
   getPlace(id: number) : Observable<PlaceModel>{
     return this.httpClient.get<PlaceModel>(apiPath + 'place/' + id);
   }
+
+  addPlace(placeModel : PlaceModel) : Observable<any> {
+    return this.httpClient.post(apiPath + 'place', placeModel);
+  }
 }

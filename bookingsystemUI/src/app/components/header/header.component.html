@@ -10,6 +10,9 @@
       </button>
     </div>
     <div *ngIf="isLoggedIn()">
+      <button mat-raised-button style="margin-right: 10px" *ngIf="isManager()" routerLink="/place/new">
+        <span>Add place</span>
+      </button>
       <button mat-raised-button style="margin-right: 10px" (click)="onLogout()">
         <span>Log out</span>
       </button>

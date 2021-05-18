@@ -166,7 +166,7 @@ public class PlaceServiceImpl implements PlaceService {
                             throw new RuntimeException("Day is not found.");
                     }
                     return schedule;
-                }).collect(Collectors.toSet());
+                }). collect(Collectors.toSet());
     }
 
     private Set<Service> makeServices (PlaceDto placeDto) {
