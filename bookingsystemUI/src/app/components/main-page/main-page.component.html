@@ -1,52 +1,28 @@
-<!--<div id="dataIO">-->
-<!--  <div class="w3-container w3-dark-gray w3-center"><h3>Inputs</h3></div>-->
-<!--  <div class="w3-container" style="padding: 10px" >-->
-<!--    <h3 *ngFor="let input of getKeys(parameters)">-->
-<!--      <ng-container *ngIf="!isCalculated; then inputs; else blocks"></ng-container>-->
-<!--      <ng-template #inputs>-->
-<!--        <button class="w3-btn w3-ripple w3-block" [ngClass]="parameters.get(input)?'w3-green':'w3-red'" (click)="changeState(input)">{{input}}</button>-->
-<!--      </ng-template>-->
-<!--      <ng-template #blocks>-->
-<!--        <div class="w3-container w3-center w3-padding" [ngClass]="parameters.get(input)?'w3-green':'w3-red'">-->
-<!--          {{input}}-->
-<!--        </div>-->
-<!--      </ng-template>-->
-<!--    </h3>-->
-<!--  </div>-->
-
-<!--  <div class="w3-container w3-dark-gray w3-center"><h3>Output</h3></div>-->
-<!--  <div class="w3-container" style="min-height: 30px">-->
-<!--    <h3 *ngIf="result != null">-->
-<!--      <div class="w3-container w3-center w3-padding" [ngClass]="result?'w3-green':'w3-red'">-->
-<!--        Y-->
-<!--      </div>-->
-<!--    </h3>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<div id="content">-->
-<!--  <h1 class="w3-border w3-card-4 w3-round-xlarge contentHeader">Calculator</h1>-->
-<!--  <br>-->
-<!--  <label class="w3-text-blue">Formula</label>-->
-<!--  <ng-container *ngIf="!isCalculated; then inputFormula; else textFormula"></ng-container>-->
-<!--  <ng-template #inputFormula>-->
-<!--    <h4>-->
-<!--      <input class="w3-input w3-border" type="text" name="formula" placeholder="A & B" (input)="setInputs($event)" [value]="formula" >-->
-<!--    </h4>-->
-<!--  </ng-template>-->
-<!--  <ng-template #textFormula>-->
-<!--    <h2>{{formula}}</h2>-->
-<!--  </ng-template>-->
-<!--  <br>-->
-
-<!--  <ng-container *ngIf="!isCalculated; then calculateBtn; else enterAnotherFormulaBtn"></ng-container>-->
-<!--  <ng-template #calculateBtn>-->
-<!--    <button class="w3-btn w3-blue" (click)="calculate()">Calculate</button>-->
-<!--  </ng-template>-->
-<!--  <ng-template #enterAnotherFormulaBtn>-->
-<!--    <button class="w3-btn w3-blue" (click)="back()">Enter another formula</button>-->
-<!--    <button class="w3-btn w3-blue w3-margin-left" (click)="generateTruthTable()">Generate truth table</button>-->
-<!--    <table class="w3-table-all w3-card-4" [hidden]="isGenerated">-->
-
-<!--    </table>-->
-<!--  </ng-template>-->
-<!--</div>-->
+<div>
+  <input style="width: 90%; display: inline-block; margin-top: 5px" placeholder="Enter name of place">
+  <button (click)="search()" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-right">Search</button>
+  <br />
+  <br />
+  <div *ngFor="let place of places.content">
+    <div class="w3-row w3-card">
+      <h3 align="center" style="cursor: pointer;" routerLink="/place/{{place.place_id}}"><b>{{place.name}}</b></h3>
+      <div class="w3-quarter">
+        <img class="w3-margin-bottom w3-margin-left" style="height: 150px" src="{{place.gallery ? place.gallery[0]?.pathToPhoto : 'assets/images/Default-place.png'}}" (error)="img.src = 'assets/images/Default-place.png'" #img alt="" />
+      </div>
+      <div class="w3-half">
+        <p style="display: inline-block"  *ngFor="let service of place.services">
+          <span style="padding: 5px;" class="w3-margin-right w3-card w3-white w3-border w3-border-green w3-round-large">{{service.service.split("_")[1]}}</span>
+        </p>
+        <p>Address : {{place.address?.country}}, {{place.address?.city}}, {{place.address?.street}}, {{place.address?.house_number}}</p>
+      </div>
+      <div class="w3-quarter">
+        <b>Creator: {{place.user?.name}} {{place.user?.surname}}</b>
+      </div>
+    </div>
+    <br />
+  </div>
+  <br />
+  <mat-paginator [length]="places.totalElements" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent($event)">
+  </mat-paginator>
+</div>

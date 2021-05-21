@@ -26,6 +26,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { UsernameFormComponent } from './components/username-form/username-form.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
-        MatSelectModule
+        MatSelectModule,
+        MatPaginatorModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }

@@ -6,6 +6,7 @@ import com.diplom.bookingsystem.model.Place.Gallery;
 import com.diplom.bookingsystem.repository.PlaceRepository;
 import com.diplom.bookingsystem.service.Place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,13 @@ public class PlaceController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getPlace(@PathVariable Long id) {
         return placeService.getPlace(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getPlaces(
+            @RequestParam Integer page,
+            @RequestParam Integer pageSize) {
+        return placeService.getPlaces(page, pageSize);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")

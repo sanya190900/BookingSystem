@@ -5,8 +5,11 @@
   <div class="w3-row">
     <table style="width: 100%">
       <tr>
+        <td *ngIf="photoUrls?.length == 0">
+          <img src='assets/images/Default-place.png' height="120px" alt="">
+        </td>
         <td *ngFor="let url of photoUrls">
-          <img [src]="url" height="120px">
+          <img [src]="url" height="120px" (error)="img.src = 'assets/images/Default-place.png'" #img  alt="">
         </td>
       </tr>
     </table>

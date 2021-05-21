@@ -1,6 +1,7 @@
 package com.diplom.bookingsystem.service.Place.Impl;
 
 import com.diplom.bookingsystem.dto.Place.PlaceDto;
+import com.diplom.bookingsystem.dto.Place.PlacesDto;
 import com.diplom.bookingsystem.dto.Place.ScheduleDto;
 import com.diplom.bookingsystem.exceptions.PlaceNotFoundException;
 import com.diplom.bookingsystem.model.Place.*;
@@ -9,12 +10,15 @@ import com.diplom.bookingsystem.model.User.User;
 import com.diplom.bookingsystem.repository.*;
 import com.diplom.bookingsystem.service.Place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.awt.print.Pageable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -98,6 +102,12 @@ public class PlaceServiceImpl implements PlaceService {
         placeRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getPlaces(Integer page, Integer pageSize) {
+        Page<Place> placesPage = placeRepository.findAll(PageRequest.of(page, pageSize));
+        return new ResponseEntity<>(new PlacesDto(placesPage.getContent(), placesPage.getTotalElements()), HttpStatus.OK);
     }
 
     private Place makePlace(PlaceDto placeDto) {
