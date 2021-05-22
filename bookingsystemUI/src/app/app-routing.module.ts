@@ -11,14 +11,6 @@ import {PasswordChangeComponent} from './components/password-change/password-cha
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainPageComponent
-  },
-  {
-    path: ':refresh',
-    component: MainPageComponent
-  },
-  {
     path: 'login',
     component: LoginPageComponent
   },
@@ -63,6 +55,19 @@ const routes: Routes = [
       {
         path: ':id',
         component: PlacePageComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: '',
+        component: MainPageComponent
+      },
+      {
+        path: ':refresh',
+        component: MainPageComponent
       }
     ]
   }
