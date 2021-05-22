@@ -11,7 +11,7 @@
     <div class="w3-row w3-card">
       <h3 align="center" style="cursor: pointer;" routerLink="/place/{{place.place_id}}"><b>{{place.name}}</b></h3>
       <div class="w3-quarter">
-        <img class="w3-margin-bottom w3-margin-left" style="height: 150px" src="{{place.gallery ? place.gallery[0]?.pathToPhoto : 'assets/images/Default-place.png'}}" (error)="img.src = 'assets/images/Default-place.png'" #img alt="" />
+        <img class="w3-margin-bottom w3-margin-left" style="height: 150px; max-width: 200px" src="{{place.gallery ? place.gallery[0]?.pathToPhoto : 'assets/images/Default-place.png'}}" (error)="img.src = 'assets/images/Default-place.png'" #img alt="" />
       </div>
       <div class="w3-half">
         <p style="display: inline-block"  *ngFor="let service of place.services">
