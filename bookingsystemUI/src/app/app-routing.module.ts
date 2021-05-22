@@ -15,6 +15,10 @@ const routes: Routes = [
     component: MainPageComponent
   },
   {
+    path: ':refresh',
+    component: MainPageComponent
+  },
+  {
     path: 'login',
     component: LoginPageComponent
   },

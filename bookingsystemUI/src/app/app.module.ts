@@ -27,6 +27,8 @@ import { UsernameFormComponent } from './components/username-form/username-form.
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { SearchComponent } from './components/search/search.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     PlacePageComponent,
     AddPlaceFormComponent,
     UsernameFormComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    SearchComponent
   ],
     imports: [
         MatMenuModule,

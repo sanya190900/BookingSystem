@@ -105,8 +105,10 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public ResponseEntity<?> getPlaces(Integer page, Integer pageSize) {
-        Page<Place> placesPage = placeRepository.findAll(PageRequest.of(page, pageSize));
+    public ResponseEntity<?> getPlaces(Integer page, Integer pageSize, String name, String country,
+                                       String city, String street, String creatorName, String creatorSurname) {
+        Page<Place> placesPage = placeRepository.findAllByNameAndAddress_CountryAndAddress_CityAndAddress_StreetAndUser_NameAndUser_Surname(name, country, city, street, creatorName, creatorSurname, PageRequest.of(page, pageSize));
+        System.out.println(placesPage);
         return new ResponseEntity<>(new PlacesDto(placesPage.getContent(), placesPage.getTotalElements()), HttpStatus.OK);
     }
 

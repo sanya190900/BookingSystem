@@ -1,7 +1,11 @@
+<div class="search">
+  <app-search></app-search>
+</div>
 <div>
-  <input style="width: 90%; display: inline-block; margin-top: 5px" placeholder="Enter name of place">
-  <button (click)="search()" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-right">Search</button>
-  <br />
+  <form [formGroup]="searchForm">
+    <input style="width: 90%; display: inline-block; margin-top: 5px" formControlName="name" placeholder="Enter name of place">
+    <button (click)="search()" class="w3-button w3-white w3-border w3-border-green w3-round-large w3-right">Search</button>
+  </form>
   <br />
   <div *ngFor="let place of places.content">
     <div class="w3-row w3-card">

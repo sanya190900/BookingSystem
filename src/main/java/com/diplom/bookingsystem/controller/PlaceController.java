@@ -32,8 +32,15 @@ public class PlaceController {
     @GetMapping
     public ResponseEntity<?> getPlaces(
             @RequestParam Integer page,
-            @RequestParam Integer pageSize) {
-        return placeService.getPlaces(page, pageSize);
+            @RequestParam Integer pageSize,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String creatorName,
+            @RequestParam(required = false) String creatorSurname
+            ) {
+        return placeService.getPlaces(page, pageSize, name, country, city, street, creatorName, creatorSurname);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")

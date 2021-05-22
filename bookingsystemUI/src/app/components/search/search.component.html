@@ -1,0 +1,14 @@
+<div class="w3-card w3-padding">
+  <form [formGroup]="searchForm">
+    <h4 align="center">Search</h4>
+    <input formControlName="country" placeholder="Country" style="width: 100%" />
+    <input formControlName="city" placeholder="City" class="w3-margin-top" style="width: 100%"/>
+    <input formControlName="street" placeholder="Street" class="w3-margin-top" style="width: 100%"/>
+
+    <hr color="black" />
+    <input formControlName="creatorName" placeholder="Creator name" style="width: 100%" />
+    <input formControlName="creatorSurname" placeholder="Creator surname" class="w3-margin-top" style="width: 100%" />
+
+    <button (click)="search()" style="width: 80%; margin-left: 10%" class="w3-btn w3-margin-top w3-white w3-border w3-border-green w3-round-large">Search</button>
+  </form>
+</div>

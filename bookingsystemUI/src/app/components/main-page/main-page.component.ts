@@ -3,6 +3,8 @@ import {PageEvent} from '@angular/material/paginator';
 import {PlaceService} from '../../services/place/place.service';
 import {PlaceModel} from '../../models/PlaceModel';
 import {PlacesModel} from '../../models/PlacesModel';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -12,26 +14,53 @@ import {PlacesModel} from '../../models/PlacesModel';
 export class MainPageComponent implements OnInit {
   places: PlacesModel = new PlacesModel();
 
-  constructor(private placeService: PlaceService) {
-    this.placeService.getPlaces(0, 5).subscribe(
-      places => {
-        this.places = places || [];
-      },
-      error => console.log(error)
-    );
+  searchForm: FormGroup = this.formBuilder.group({
+    name: ['']
+  });
+
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private placeService: PlaceService
+  ) {
+    //this.places = this.router.getCurrentNavigation()?.extras.state;
+    console.log(history.state);
+    if (!history.state.hasOwnProperty("content")) {
+      this.placeService.getPlaces({page: 0, pageSize: 5}).subscribe(
+        places => {
+          this.places = places || [];
+        },
+        error => console.log(error)
+      );
+    } else
+      this.places = history.state;
   }
 
   ngOnInit(): void {
   }
 
   pageEvent(event: PageEvent) {
-    this.placeService.getPlaces(event.pageIndex, event.pageSize).subscribe(
+    let searchModel = {
+      page: event.pageIndex,
+      pageSize: event.pageSize
+    }
+
+    this.placeService.getPlaces(searchModel).subscribe(
       places => this.places = places || [],
       error => console.log(error)
     );
   }
 
   search() {
+    let searchModel = {
+      page: 0,
+      pageSize: 5,
+      name: this.searchForm.value.name
+    }
 
+    this.placeService.getPlaces(searchModel).subscribe(
+      places => this.places = places || [],
+      error => console.log(error)
+    );
   }
 }

@@ -16,5 +16,6 @@ public interface PlaceService {
 
     ResponseEntity<?> deletePlace(Long id);
 
-    ResponseEntity<?> getPlaces(Integer page, Integer pageSize);
+    ResponseEntity<?> getPlaces(Integer page, Integer pageSize, String name, String country,
+                                String city, String street, String creatorName, String creatorSurname);
 }
